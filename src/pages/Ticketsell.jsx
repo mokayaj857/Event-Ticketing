@@ -23,7 +23,7 @@ const TokenizedTicketing = () => {
   }, []);
 
   const sampleEvents = [
-    <a href= "/qrcode">
+   
     {
       id: 1,
       name: "Blockchain Summit 2025",
@@ -51,7 +51,7 @@ const TokenizedTicketing = () => {
       total: 300,
       image: "/src/assets/im.png"
     }
-    </a>
+
   ];
 
   return (
