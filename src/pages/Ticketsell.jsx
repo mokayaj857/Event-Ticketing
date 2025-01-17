@@ -23,6 +23,7 @@ const TokenizedTicketing = () => {
   }, []);
 
   const sampleEvents = [
+    <a href= "/qrcode">
     {
       id: 1,
       name: "Blockchain Summit 2025",
@@ -50,6 +51,7 @@ const TokenizedTicketing = () => {
       total: 300,
       image: "/src/assets/im.png"
     }
+    </a>
   ];
 
   return (
@@ -109,6 +111,7 @@ const TokenizedTicketing = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex space-x-4 mb-8">
             {['buy', 'create', 'resell'].map((section) => (
+              < a href= "/qrcode">
               <button
                 key={section}
                 className={`px-6 py-3 rounded-lg transition-all duration-300 relative overflow-hidden
@@ -121,6 +124,7 @@ const TokenizedTicketing = () => {
                   {section.charAt(0).toUpperCase() + section.slice(1)} Tickets
                 </span>
               </button>
+              </a>
             ))}
           </div>
 
