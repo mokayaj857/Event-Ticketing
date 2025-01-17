@@ -17,7 +17,6 @@ import contractABI from "/src/abi/Ticket.json";
 // Smart Contract Details
 const CONTRACT_ADDRESS = 'YOUR_CONTRACT_ADDRESS_HERE'; //<--add contract address
 
-
 const QRVerificationSystem = () => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState(null);
