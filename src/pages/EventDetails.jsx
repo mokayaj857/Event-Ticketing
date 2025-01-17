@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Calendar, MapPin, Ticket, Wallet, ArrowLeft, DollarSign } from "lucide-react";
 
-import contractABI = [ /* ABI JSON here */ ];
+import { ethers } from "ethers";
 
 const contractAddress = "........"; //<---add address here
-const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
 
 
 const eventDetails = {
