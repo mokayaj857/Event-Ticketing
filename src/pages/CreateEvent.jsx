@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { ethers } from 'ethers';
+
+const contractAddress = "........"; //<---add address here
+const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
 
 const CreateEvent = () => {
   const [eventData, setEventData] = useState({
@@ -15,11 +20,44 @@ const CreateEvent = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Event created:', eventData);
-    // You can add more logic here for actual submission to the server or blockchain
+
+    try {
+      // Request access to MetaMask
+      if (!window.ethereum) {
+        alert('MetaMask is not installed. Please install it to use this feature.');
+        return;
+      }
+
+      // Connect to the provider and signer
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      // Connect to the contract
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+      // Send the transaction to the blockchain
+      const tx = await contract.createEvent(
+        eventData.name,
+        eventData.date,
+        eventData.description
+      );
+
+      console.log('Transaction submitted:', tx.hash);
+
+      // Wait for the transaction to be mined
+      const receipt = await tx.wait();
+      console.log('Transaction mined:', receipt);
+
+      alert('Event created successfully on the blockchain!');
+      setEventData({ name: '', date: '', description: '' });
+    } catch (error) {
+      console.error('Error creating event:', error);
+      alert('Failed to create the event. See console for details.');
+    }
   };
+
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">

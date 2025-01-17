@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { QRCode } from 'react-qr-code';
+import { ethers } from 'ethers';
+import QRCode from 'react-qr-code';
 import { 
   Shield, 
   CheckCircle, 
@@ -10,6 +11,11 @@ import {
   Scan,
   Globe
 } from 'lucide-react';
+
+import contractABI from "/src/abi/Ticket.json";
+
+// Smart Contract Details
+const CONTRACT_ADDRESS = 'YOUR_CONTRACT_ADDRESS_HERE'; //<--add contract address
 
 const QRVerificationSystem = () => {
   const [isVerifying, setIsVerifying] = useState(false);
@@ -37,6 +43,11 @@ const QRVerificationSystem = () => {
     }
   ];
 
+  // Initialize Ethers.js Provider and Contract
+  const provider = new ethers.providers.Web3Provider(window.ethereum); // Ensure MetaMask is installed
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
   const generateQRCode = (ticketData) => {
     setSelectedTicket(ticketData);
     const qrString = JSON.stringify({
@@ -47,35 +58,35 @@ const QRVerificationSystem = () => {
     setQrData(qrString);
   };
 
-  const verifyTicket = () => {
-    setIsVerifying(true);
-    setTimeout(() => {
-      setVerificationStatus('success');
+  const verifyTicketOnBlockchain = async () => {
+    if (!selectedTicket) {
+      alert('Please select a ticket to verify.');
+      return;
+    }
+
+    try {
+      setIsVerifying(true);
+      setVerificationStatus(null);
+
+      // Call the smart contract to verify the ticket
+      const isValid = await contract.verifyTicket(selectedTicket.id);
+
+      // Update UI based on the verification result
+      if (isValid) {
+        setVerificationStatus('success');
+      } else {
+        setVerificationStatus('error');
+      }
+    } catch (error) {
+      console.error('Error verifying ticket:', error);
+      setVerificationStatus('error');
+    } finally {
       setIsVerifying(false);
-    }, 2000);
+    }
   };
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full mix-blend-screen animate-float-slow"
-            style={{
-              width: `${Math.random() * 300 + 100}px`,
-              height: `${Math.random() * 300 + 100}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              background: `radial-gradient(circle, rgba(147,51,234,0.1) 0%, rgba(0,0,0,0) 70%)`,
-              animationDelay: `${i * 2}s`,
-              animationDuration: `${20 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
       <div className="max-w-7xl mx-auto relative">
         {/* Header Section */}
         <div className="text-center mb-16">
@@ -187,7 +198,7 @@ const QRVerificationSystem = () => {
 
                 {qrData && !isVerifying && (
                   <button
-                    onClick={verifyTicket}
+                    onClick={verifyTicketOnBlockchain}
                     className="mt-6 px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 
                       rounded-lg hover:from-purple-500 hover:to-blue-500 transition-all
                       flex items-center justify-center space-x-2 mx-auto"
@@ -204,7 +215,7 @@ const QRVerificationSystem = () => {
         {/* Network Info */}
         <div className="mt-12 text-center">
           <p className="text-gray-400">
-            Connected to Avalanche Network • Current Block: 12345678
+            Connected to Avalanche Network • Ensure MetaMask is installed and connected.
           </p>
         </div>
       </div>

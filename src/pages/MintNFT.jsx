@@ -2,18 +2,7 @@ import React, { useState } from 'react';
 import { ethers } from 'ethers';
 
 // Your contract ABI and address (replace these with your actual contract ABI and address)
-const contractABI = [
-  // ABI (replace this with your NFT contract ABI)
-  {
-    "inputs": [
-      { "internalType": "string", "name": "_tokenURI", "type": "string" }
-    ],
-    "name": "mintNFT",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-];
+import contractABI from "/src/abi/Ticket.json";
 const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your NFT contract address
 
 const MintNFT = () => {
