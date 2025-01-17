@@ -154,6 +154,7 @@ const TokenizedTicketing = () => {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-semibold text-purple-400">{event.price}</span>
+                      <a href='/QrCode'>
                       <button className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 
                         rounded-lg flex items-center space-x-2 group-hover:shadow-lg 
                         group-hover:shadow-purple-500/20 transition-all">
@@ -161,6 +162,7 @@ const TokenizedTicketing = () => {
                                selectedSection === 'create' ? 'Create' : 'Resell'}</span>
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </button>
+                      </a>
                     </div>
                     <div className="mt-4 bg-purple-900/20 rounded-lg p-3">
                       <div className="flex justify-between text-sm text-gray-400">
@@ -184,11 +186,13 @@ const TokenizedTicketing = () => {
 
       {/* Wallet Connection */}
       <div className="fixed bottom-6 right-6">
+        <a href='/'>
         <button className="group px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl 
           flex items-center space-x-3 hover:shadow-lg hover:shadow-purple-500/20 transition-all">
           <Wallet className="w-5 h-5" />
           <span>Connect Wallet</span>
         </button>
+        </a>
       </div>
     </div>
   );
