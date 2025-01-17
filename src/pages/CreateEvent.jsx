@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 
+const contractAddress = "........"; //<---add address here
+const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
 
 const CreateEvent = () => {
