@@ -5,6 +5,10 @@ import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
 import Footer from '../components/Footer';
+import { ethers } from 'ethers';
+import { Link } from 'react-router-dom';
+
+
 const ParticleField = () => {
   return (
     <div className="fixed inset-0 opacity-30">
@@ -55,7 +59,8 @@ const UltimateEventPlatform = () => {
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeStat, setActiveStat] = useState(null);
-  
+  const [walletAddress, setWalletAddress] = useState(null);
+
   useEffect(() => {
     setIsVisible(true);
     const handleMouseMove = (e) => {
@@ -85,6 +90,23 @@ const UltimateEventPlatform = () => {
       color: "from-purple-600 to-pink-600"
     }
   ];
+
+  // Connect Wallet Functionality
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send('eth_requestAccounts', []); // Request account connection
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+        setWalletAddress(address); // Store wallet address in state
+      } catch (error) {
+        console.error('Error connecting to wallet', error);
+      }
+    } else {
+      alert('Please install MetaMask!');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
@@ -122,29 +144,33 @@ const UltimateEventPlatform = () => {
               </div>
               
               <div className="flex items-center space-x-8">
-                {['Home', 'Events', 'Contact'].map((item) => (
-                  <a 
-                    key={item}
-                    href="#" 
-                    className="relative group py-2"
-                  >
-                    <span className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300">
-                      {item}
-                    </span>
-                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 
-                      group-hover:w-full group-hover:left-0 transition-all duration-300" />
-                  </a>
-                ))}
-                <a href="/hero">
-                <button className="relative px-8 py-3 group overflow-hidden rounded-xl">
-                  
+      {[
+        { name: 'Home', path: '/' },
+        { name: 'Events', path: '/ticketsell' },
+        { name: 'Contact', path: '/footer' },
+      ].map(({ name, path }) => (
+        <Link
+          key={name}
+          to={path}
+          className="relative group py-2"
+        >
+          <span className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300">
+            {name}
+          </span>
+          <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 
+            group-hover:w-full group-hover:left-0 transition-all duration-300" />
+        </Link>
+      ))}
+                <button 
+                  onClick={connectWallet}
+                  className="relative px-8 py-3 group overflow-hidden rounded-xl"
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-70 
                     group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 blur-xl 
                     group-hover:blur-2xl transition-all duration-300" />
-                  <span className="relative z-10">Login</span>
+                  <span className="relative z-10">{walletAddress ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : 'Connect Wallet'}</span>
                 </button>
-                </a>
               </div>
             </div>
           </div>
@@ -152,6 +178,7 @@ const UltimateEventPlatform = () => {
       </nav>
 
       {/* Hero Section with Advanced Animations */}
+      
       <main className="relative pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12 items-center">
           <div className={`transition-all duration-1000 delay-300 
@@ -189,12 +216,14 @@ const UltimateEventPlatform = () => {
               </button>
               </a>
 
+              <a href ="/mint">
               <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
                 <div className="absolute inset-0 border border-purple-500 rounded-xl" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 
                   transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 <span className="relative z-10">Create Event</span>
               </button>
+              </a>
             </div>
           </div>
 
@@ -222,10 +251,11 @@ const UltimateEventPlatform = () => {
           </div>
         </div>
       </main>
+      
 
       {/* Features with Interactive Animations */}
       <section className="py-20 px-6 relative">
-        <div className="max-w-7xl mx-auto grid grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <AnimatedCard
               key={index}
@@ -247,11 +277,13 @@ const UltimateEventPlatform = () => {
             </AnimatedCard>
           ))}
         </div>
+      
+      
       </section>
 
       {/* Interactive Stats with Hover Effects */}
       <section className="py-20 px-6 relative">
-        <div className="max-w-7xl mx-auto grid grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-4 gap-8">
           {[
             { value: "100K+", label: "Active Users", icon: <Users />, color: "purple" },
             { value: "50K+", label: "Events Hosted", icon: <Calendar />, color: "blue" },
@@ -287,6 +319,7 @@ const UltimateEventPlatform = () => {
             </div>
           ))}
         </div>
+      
       </section>
       <section>
         <div>

@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Calendar, MapPin, Ticket, Wallet, ArrowLeft, DollarSign } from "lucide-react";
 
+import contractABI = [ /* ABI JSON here */ ];
+
+const contractAddress = "........"; //<---add address here
+const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+
 const eventDetails = {
   1: {
     title: "Concert A",
@@ -54,14 +60,31 @@ export default function EventDetails() {
     });
   };
 
-  const handlePurchase = () => {
-    if (!isWalletConnected) {
-      setShowModal(true);
-    } else {
-      // Handle purchase logic here
-      alert("Processing your purchase...");
+  const handlePurchase = async () => {
+  if (!isWalletConnected) {
+    setShowModal(true);
+  } else {
+    try {
+      // Access the user's wallet
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      // Create a contract instance
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+      // Example: Call the contract's buyTicket function
+      const eventId = 1; // Replace with the actual event ID
+      const ticketPrice = ethers.utils.parseEther(event.price); // Convert price to Wei
+      const tx = await contract.buyTicket(eventId, { value: ticketPrice });
+
+      // Wait for the transaction to confirm
+      await tx.wait();
+      alert("Tickets purchased successfully!");
+    } catch (error) {
+      console.error("Error processing purchase:", error);
     }
-  };
+  }
+};
 
   const connectWallet = () => {
     setIsWalletConnected(true);
