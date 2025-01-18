@@ -12,6 +12,8 @@ import Qrcode from './pages/Qrcode';
 import Chatbit from './pages/Chatbit';
 import Footer from './components/Footer';
 import Ticketsell from './pages/Ticketsell';
+import MintNFT from './pages/MintNFT';
+import Ticket from './pages/Ticket';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
     element: <Qrcode />,
   },
   {
+    path: "ticket",
+    element: <Ticket />,
+  },
+  {
     path: "Ticketsell",
     element: <Ticketsell />
   },
@@ -42,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "event-list",
     element: <EventList />,
+  },
+  {
+    path: "mint",
+    element: <MintNFT />,
   },
   {
     path: "event-details",

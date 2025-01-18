@@ -12,6 +12,7 @@ import Footer from "./components/Footer"; // Updated import path for Footer
 import Qrcode from "./pages/Qrcode";
 import ConnectWalletButton from "./components/ConnectWallet";
 import CreateEvent from "./pages/CreateEvent";
+import Ticket from "./pages/Ticket";
 import MintNFT from "./pages/MintNFT";
 const App = () => {
   return (
@@ -32,6 +33,9 @@ const App = () => {
 
         {/* Discover under Testimonials */}
         <Route path="/discover" element={<Discover />} />
+
+        {/* Buy under Testimonials */}
+        <Route path="/ticket" element={<Ticket />} />
 
         {/* Home, EventList, EventDetails remain unchanged */}
         <Route path="/home" element={<Home />} />

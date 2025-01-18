@@ -216,12 +216,12 @@ const UltimateEventPlatform = () => {
               </button>
               </a>
 
-              <a href ="/mint">
+              <a href ="/ticket">
               <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
                 <div className="absolute inset-0 border border-purple-500 rounded-xl" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 
                   transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                <span className="relative z-10">Create Event</span>
+                <span className="relative z-10">Tickets Collection</span>
               </button>
               </a>
             </div>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import imageImage from "../assets/image.png";
 import imImage from "../assets/im.png";
 import { 
   Ticket, 
@@ -31,7 +30,7 @@ const TokenizedTicketing = () => {
       price: "0.5 AVAX",
       available: 150,
       total: 500,
-      image: "/src/assets/image.png"
+      image: "/src/assets/imag.png"
     },
     {
       id: 2,

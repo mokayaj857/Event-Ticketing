@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
+// import { Web3Provider } from "@ethersproject/providers";
 import QRCode from 'react-qr-code';
 import { 
   Shield, 
@@ -15,7 +15,9 @@ import {
 import contractABI from "/src/abi/Ticket.json";
 
 // Smart Contract Details
-const CONTRACT_ADDRESS = 'YOUR_CONTRACT_ADDRESS_HERE'; //<--add contract address
+// const CONTRACT_ADDRESS = 'YOUR_CONTRACT_ADDRESS_HERE'; //<--add contract address
+
+// const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 const QRVerificationSystem = () => {
   const [isVerifying, setIsVerifying] = useState(false);
@@ -44,9 +46,9 @@ const QRVerificationSystem = () => {
   ];
 
   // Initialize Ethers.js Provider and Contract
-  const provider = new ethers.providers.Web3Provider(window.ethereum); // Ensure MetaMask is installed
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+  // const provider = new ethers.providers.Web3Provider(window.ethereum); // Ensure MetaMask is installed
+  // const signer = provider.getSigner();
+  // const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
   const generateQRCode = (ticketData) => {
     setSelectedTicket(ticketData);

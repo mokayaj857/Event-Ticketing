@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Calendar, MapPin, Ticket, Wallet, ArrowLeft, DollarSign } from "lucide-react";
 
-<<<<<<< HEAD
 import { ethers } from "ethers";
-=======
-import contractABI from "/src/abi/Ticket.json";
->>>>>>> refs/remotes/origin/front
 
 const contractAddress = "........"; //<---add address here
 
