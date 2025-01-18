@@ -1,186 +1,121 @@
-import React, { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Calendar, MapPin, Ticket, Wallet, ArrowLeft, DollarSign } from "lucide-react";
+import React, { useState } from 'react';
+// import { ethers } from 'ethers';
 
-import { ethers } from "ethers";
+// import contractABI from "/src/abi/Ticket.json";
 
-const contractAddress = "........"; //<---add address here
+// const contractAddress = "........"; //<---add address here
+// const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
 
+const CreateEvent = () => {
+  const [eventData, setEventData] = useState({
+    name: '',
+    date: '',
+    description: '',
+  });
 
-const eventDetails = {
-  1: {
-    title: "Concert A",
-    description: "Join us for an unforgettable night of live music featuring top artists! Experience amazing acoustics, spectacular light shows, and an electric atmosphere that will leave you wanting more.",
-    price: "30",
-    date: "2025-05-01",
-    location: "Venue A",
-    capacity: "500",
-    organizer: "Music Events Co.",
-    category: "Music"
-  },
-  2: {
-    title: "Conference B",
-    description: "A premier tech conference bringing together industry leaders, innovators, and enthusiasts. Network with professionals, attend workshops, and gain insights into the latest technological trends.",
-    price: "100",
-    date: "2025-06-15",
-    location: "Venue B",
-    capacity: "1000",
-    organizer: "Tech Summit Inc.",
-    category: "Technology"
-  }
-};
-
-export default function EventDetails() {
-  const { eventId } = useParams();
-  const event = eventDetails[eventId];
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  
-  if (!event) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Event Not Found</h1>
-          <Link to="/" className="text-blue-500 hover:text-blue-600 flex items-center justify-center gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Events
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEventData({
+      ...eventData,
+      [name]: value,
     });
   };
 
-  const handlePurchase = async () => {
-  if (!isWalletConnected) {
-    setShowModal(true);
-  } else {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      // Access the user's wallet
+      // Request access to MetaMask
+      if (!window.ethereum) {
+        alert('MetaMask is not installed. Please install it to use this feature.');
+        return;
+      }
+
+      // Connect to the provider and signer
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
-      // Create a contract instance
+      // Connect to the contract
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-      // Example: Call the contract's buyTicket function
-      const eventId = 1; // Replace with the actual event ID
-      const ticketPrice = ethers.utils.parseEther(event.price); // Convert price to Wei
-      const tx = await contract.buyTicket(eventId, { value: ticketPrice });
+      // Send the transaction to the blockchain
+      const tx = await contract.createEvent(
+        eventData.name,
+        eventData.date,
+        eventData.description
+      );
 
-      // Wait for the transaction to confirm
-      await tx.wait();
-      alert("Tickets purchased successfully!");
+      console.log('Transaction submitted:', tx.hash);
+
+      // Wait for the transaction to be mined
+      const receipt = await tx.wait();
+      console.log('Transaction mined:', receipt);
+
+      alert('Event created successfully on the blockchain!');
+      setEventData({ name: '', date: '', description: '' });
     } catch (error) {
-      console.error("Error processing purchase:", error);
+      console.error('Error creating event:', error);
+      alert('Failed to create the event. See console for details.');
     }
-  }
-};
-
-  const connectWallet = () => {
-    setIsWalletConnected(true);
-    setShowModal(false);
   };
 
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <Link to="/" className="inline-flex items-center text-blue-500 hover:text-blue-600 mb-6 gap-2">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Events
-        </Link>
-
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <img
-            src={`/api/placeholder/800/400`}
-            alt={event.title}
-            className="w-full h-64 object-cover"
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-3xl font-semibold text-gray-800 text-center mb-6">Create Event</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2" htmlFor="name">Event Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={eventData.name}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md"
+            placeholder="Enter event name"
+            required
           />
-          
-          <div className="p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
-                {event.category}
-              </span>
-            </div>
-
-            <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Calendar className="w-5 h-5" />
-                  <span>{formatDate(event.date)}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <MapPin className="w-5 h-5" />
-                  <span>{event.location}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Ticket className="w-5 h-5" />
-                  <span>Capacity: {event.capacity} attendees</span>
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <DollarSign className="w-5 h-5" />
-                  <span className="text-2xl font-bold">${event.price}</span>
-                </div>
-                <p className="text-gray-600">Organized by: {event.organizer}</p>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-200 pt-6 mb-6">
-              <h2 className="text-xl font-semibold mb-3">About This Event</h2>
-              <p className="text-gray-600 leading-relaxed">{event.description}</p>
-            </div>
-
-            <button
-              onClick={handlePurchase}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-            >
-              <Ticket className="w-5 h-5" />
-              Buy Tickets
-            </button>
-          </div>
         </div>
-      </div>
 
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Connect Your Wallet</h2>
-            <p className="text-gray-600 mb-4">
-              Please connect your wallet to purchase tickets for this event.
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={connectWallet}
-                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-              >
-                <Wallet className="w-4 h-4" />
-                Connect Wallet
-              </button>
-              <button
-                onClick={() => setShowModal(false)}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2" htmlFor="date">Event Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={eventData.date}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md"
+            required
+          />
         </div>
-      )}
+
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2" htmlFor="description">Event Description</label>
+          <textarea
+            id="description"
+            name="description"
+            value={eventData.description}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md"
+            placeholder="Enter event description"
+            required
+          />
+        </div>
+
+        <div className="text-center">
+          <button
+            type="submit"
+            className="bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600 transition duration-300"
+          >
+            Create Event
+          </button>
+        </div>
+      </form>
     </div>
   );
-}
+};
+
+export default CreateEvent;

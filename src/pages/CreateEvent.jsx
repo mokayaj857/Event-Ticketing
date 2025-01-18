@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 
-const contractAddress = "........"; //<---add address here
-const contract = new ethers.Contract(contractAddress, contractABI, provider);
-
+import contractABI from "../../../../../../../src/abi/Ticket.json";    
+const contractAddress = "0x256ff3b9d3df415a05ba42beb5f186c28e103b2a"; //<---add address here
 
 const CreateEvent = () => {
   const [eventData, setEventData] = useState({
