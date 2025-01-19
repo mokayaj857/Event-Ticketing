@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
 import { 
   Wallet, 
   Image as ImageIcon, 
@@ -6,19 +7,40 @@ import {
   ChevronRight, 
   Plus, 
   MinusCircle, 
-  Loader
+  Loader,
+  AlertCircle
 } from 'lucide-react';
 
+// Replace with your actual contract address and ABI
+
+
+const CONTRACT_ADDRESS = "YOUR_NFT_CONTRACT_ADDRESS";
+const CONTRACT_ABI = [
+  "function mint(uint256 quantity) public payable",
+  "function totalSupply() public view returns (uint256)",
+  "function maxSupply() public view returns (uint256)",
+  "function balanceOf(address owner) public view returns (uint256)"
+];
+
 const Ticket = () => {
+  // UI States
   const [isVisible, setIsVisible] = useState(false);
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [mintCount, setMintCount] = useState(1);
   const [isHovering, setIsHovering] = useState(false);
   const [selectedPreview, setSelectedPreview] = useState(0);
+  
+  // Wallet & Contract States
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [mintCount, setMintCount] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  // NFT States
+  const [totalMinted, setTotalMinted] = useState(0);
+  const [maxSupply, setMaxSupply] = useState(10000);
+  const [userBalance, setUserBalance] = useState(0);
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const PRICE_PER_NFT = 0.08; // ETH
 
   const previewImages = [
     "/src/assets/rena.png",
@@ -27,9 +49,143 @@ const Ticket = () => {
     "/src/assets/rb2.png",
     "/src/assets/ast.png",
     "/src/assets/rb1.png",
-    "/src/assets/blogo.png"
+    "/src/assets/rb3.png"
 
-  ];
+  useEffect(() => {
+    setIsVisible(true);
+    checkWalletConnection();
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', () => window.location.reload());
+    }
+
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isWalletConnected) {
+      updateContractInfo();
+    }
+  }, [isWalletConnected]);
+
+  const handleAccountsChanged = (accounts) => {
+    if (accounts.length === 0) {
+      // User disconnected wallet
+      setIsWalletConnected(false);
+      setWalletAddress('');
+    } else {
+      // User switched accounts
+      setWalletAddress(accounts[0]);
+    }
+  };
+
+  const checkWalletConnection = async () => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+          setIsWalletConnected(true);
+        }
+      } catch (error) {
+        console.error("Error checking wallet connection:", error);
+      }
+    }
+  };
+
+  const updateContractInfo = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+      
+      const [supply, max, balance] = await Promise.all([
+        contract.totalSupply(),
+        contract.maxSupply(),
+        contract.balanceOf(walletAddress)
+      ]);
+
+      setTotalMinted(Number(supply));
+      setMaxSupply(Number(max));
+      setUserBalance(Number(balance));
+    } catch (error) {
+      console.error("Error updating contract info:", error);
+    }
+  };
+
+  const connectWallet = async () => {
+    if (typeof window.ethereum === "undefined") {
+      setError("Please install MetaMask to connect your wallet!");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+      
+      if (accounts.length > 0) {
+        setWalletAddress(accounts[0]);
+        setIsWalletConnected(true);
+      }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      setError("Failed to connect wallet. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleMint = async () => {
+    if (!isWalletConnected) {
+      await connectWallet();
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+      // Calculate price in wei
+      const priceInEth = (PRICE_PER_NFT * mintCount).toString();
+      const priceInWei = ethers.parseEther(priceInEth);
+
+      // Estimate gas to check if transaction will fail
+      await contract.mint.estimateGas(mintCount, { value: priceInWei });
+
+      // Execute transaction
+      const tx = await contract.mint(mintCount, {
+        value: priceInWei
+      });
+
+      // Wait for confirmation
+      await tx.wait();
+
+      // Update contract info
+      await updateContractInfo();
+
+      // Show success message
+      alert(`Successfully minted ${mintCount} NFT${mintCount > 1 ? 's' : ''}!`);
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      setError(error.message || "Failed to mint NFT. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const formatAddress = (address) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
@@ -64,7 +220,7 @@ const Ticket = () => {
               </span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Enter the quantum realm with an exclusive ticket to our unique experience. Each ticket grants you access to a one-of-a-kind event, digitally stored and verified on the blockchain
+              Enter the quantum realm with an exclusive ticket to our unique experience. Each ticket grants you access to a one-of-a-kind event, digitally stored and verified on the blockchain.
             </p>
           </div>
 
@@ -80,20 +236,18 @@ const Ticket = () => {
                     group-hover:opacity-70 transition-opacity duration-300" />
                   <img 
                     src={previewImages[selectedPreview]}
-                    alt="Tickets Preview"
+                    alt="NFT Preview"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 
-                    group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Preview Selector */}
-                <div className="flex space-x-4 mt-4">
+                <div className="flex space-x-4 mt-4 overflow-x-auto pb-2">
                   {previewImages.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedPreview(index)}
-                      className={`relative w-20 h-20 rounded-lg overflow-hidden 
+                      className={`relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0
                         ${selectedPreview === index ? 'ring-2 ring-purple-500' : ''} 
                         transition-all duration-300 transform hover:scale-105`}
                     >
@@ -117,15 +271,16 @@ const Ticket = () => {
                   <h2 className="text-2xl font-bold mb-2">Purchase Your Ticket</h2>
                   <div className="flex items-baseline space-x-2">
                     <span className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 
-                      bg-clip-text text-transparent">0.08 ETH</span>
-                    <span className="text-gray-400">per NFT</span>
+                      bg-clip-text text-transparent">{PRICE_PER_NFT} ETH</span>
+                    <span className="text-gray-400">per ticket</span>
                   </div>
                 </div>
 
                 {/* Wallet Connection */}
                 {!isWalletConnected ? (
                   <button
-                    onClick={() => setIsWalletConnected(true)}
+                    onClick={connectWallet}
+                    disabled={isLoading}
                     className="w-full group relative px-6 py-4 rounded-xl overflow-hidden mb-6"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
@@ -133,9 +288,13 @@ const Ticket = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 
                       group-hover:from-purple-500 group-hover:to-blue-500 transition-colors duration-300" />
                     <div className="relative z-10 flex items-center justify-center space-x-2">
-                      <Wallet className={`w-5 h-5 transition-transform duration-300 
-                        ${isHovering ? 'rotate-12' : ''}`} />
-                      <span>Connect Wallet</span>
+                      {isLoading ? (
+                        <Loader className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <Wallet className={`w-5 h-5 transition-transform duration-300 
+                          ${isHovering ? 'rotate-12' : ''}`} />
+                      )}
+                      <span>{isLoading ? 'Connecting...' : 'Connect Wallet'}</span>
                     </div>
                   </button>
                 ) : (
@@ -144,10 +303,12 @@ const Ticket = () => {
                       border border-purple-500/30">
                       <div className="flex items-center space-x-2">
                         <Wallet className="w-5 h-5 text-purple-400" />
-                        <span className="text-sm">0x1234...5678</span>
+                        <span className="text-sm">{formatAddress(walletAddress)}</span>
                       </div>
-                      <button className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
-                        onClick={() => setIsWalletConnected(false)}>
+                      <button 
+                        className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
+                        onClick={() => setIsWalletConnected(false)}
+                      >
                         Disconnect
                       </button>
                     </div>
@@ -162,6 +323,7 @@ const Ticket = () => {
                       onClick={() => setMintCount(Math.max(1, mintCount - 1))}
                       className="p-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 
                         transition-colors duration-300"
+                      disabled={isLoading}
                     >
                       <MinusCircle className="w-6 h-6" />
                     </button>
@@ -170,6 +332,7 @@ const Ticket = () => {
                       onClick={() => setMintCount(Math.min(10, mintCount + 1))}
                       className="p-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 
                         transition-colors duration-300"
+                      disabled={isLoading}
                     >
                       <Plus className="w-6 h-6" />
                     </button>
@@ -185,6 +348,7 @@ const Ticket = () => {
                 </div>
 
                 {/* Mint Button */}
+             
                 <button
                   className={`w-full group relative px-6 py-4 rounded-xl overflow-hidden 
                     ${!isWalletConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -248,5 +412,5 @@ const Ticket = () => {
   );
 };
 
-
 export default Ticket;
+

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import contractABI from "/src/abi/Ticket.json";
+import contractABI from "../abi/Ticket.json";
 import { Loader2 } from 'lucide-react';
 
-const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your NFT contract address
+const contractAddress = '0x256ff3b9d3df415a05ba42beb5f186c28e103b2a'; // Replace with your NFT contract address
 
 const MintNFT = () => {
   const [walletAddress, setWalletAddress] = useState(null);
