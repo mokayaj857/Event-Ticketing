@@ -8,6 +8,35 @@ import Footer from '../components/Footer';
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
 
+// Avalanche Network Configuration
+const AVALANCHE_MAINNET_PARAMS = {
+  chainId: '0xA86A', // Hex chain ID for Avalanche Mainnet
+  chainName: 'Avalanche Mainnet',
+  nativeCurrency: {
+    name: 'AVAX',
+    symbol: 'AVAX',
+    decimals: 18
+  },
+  rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+  blockExplorerUrls: ['https://snowtrace.io/']
+};
+
+const addAvalancheNetwork = async () => {
+  if (typeof window.ethereum !== "undefined") {
+      try {
+          await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [AVALANCHE_MAINNET_PARAMS],
+          });
+          console.log("Avalanche network added successfully!");
+      } catch (error) {
+          console.error("Error adding Avalanche network:", error);
+      }
+  } else {
+      console.error("MetaMask is not installed.");
+  }
+};
+
 const ParticleField = () => {
   return (
     <div className="fixed inset-0 opacity-30">
