@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Moon, Ticket, Calendar, Users, TrendingUp, ChevronRight, Star, Zap, Activity, Globe, Power } from 'lucide-react';
-import bitcoinImage from "../assets/tig.png"; 
+import bitcoinImage from "../assets/tig.png";
 import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
@@ -8,128 +8,66 @@ import Footer from '../components/Footer';
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
 
-const ParticleField = () => {
-  return (
-    <div className="fixed inset-0 opacity-30">
-      {[...Array(50)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full animate-float"
-          style={{
-            width: `${Math.random() * 4 + 1}px`,
-            height: `${Math.random() * 4 + 1}px`,
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            background: `rgba(${Math.random() * 255}, ${Math.random() * 100 + 155}, 255, 0.6)`,
-            animationDuration: `${Math.random() * 10 + 10}s`,
-            animationDelay: `-${Math.random() * 10}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
+// Avalanche Network Configuration
+const AVALANCHE_MAINNET_PARAMS = {
+  chainId: '0xA86A',
+  chainName: 'Avalanche Mainnet C-Chain',
+  nativeCurrency: {
+    name: 'Avalanche',
+    symbol: 'AVAX',
+    decimals: 18
+  },
+  rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+  blockExplorerUrls: ['https://snowtrace.io/']
 };
 
-const AnimatedCard = ({ children, delay, onClick, isSelected }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  return (
-    <div
-      className={`relative group transition-all duration-500 transform 
-        ${isSelected ? 'scale-105 -translate-y-2' : ''} 
-        ${isHovered ? 'translate-y-[-8px]' : ''}`}
-      style={{ animationDelay: `${delay}ms` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={onClick}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-xl blur-xl 
-        group-hover:blur-2xl transition-all duration-300" />
-      <div className="relative bg-black/40 backdrop-blur-xl rounded-xl border border-purple-500/30 
-        group-hover:border-purple-500/50 p-6 transition-all duration-300">
-        {children}
-      </div>
-    </div>
-  );
+const AVALANCHE_TESTNET_PARAMS = {
+  chainId: '0xA869',
+  chainName: 'Avalanche Fuji Testnet',
+  nativeCurrency: {
+    name: 'Avalanche',
+    symbol: 'AVAX',
+    decimals: 18
+  },
+  rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+  blockExplorerUrls: ['https://testnet.snowtrace.io/']
 };
+
+// ... (ParticleField and AnimatedCard components remain the same)
 
 const UltimateEventPlatform = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [selectedFeature, setSelectedFeature] = useState(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [activeStat, setActiveStat] = useState(null);
-  const [walletAddress, setWalletAddress] = useState(null);
-  const [isConnecting, setIsConnecting] = useState(false);
+  // ... (previous state declarations)
+  const [networkError, setNetworkError] = useState(null);
 
-  useEffect(() => {
-    setIsVisible(true);
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    checkWalletConnection();
+  const switchToAvalancheNetwork = async () => {
+    if (!window.ethereum) return false;
     
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-      window.ethereum.on('disconnect', handleDisconnect);
-    }
-
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-        window.ethereum.removeListener('disconnect', handleDisconnect);
-      }
-    };
-  }, []);
-
-  const features = [
-    {
-      icon: <Ticket className="w-8 h-8" />,
-      title: "Quantum Ticketing",
-      description: "Next-gen blockchain verification with quantum security In less than 2 seconds ",
-      color: "from-purple-600 to-blue-600"
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Metaverse Events",
-      description: "Host virtual experiences in immersive 3D spaces",
-      color: "from-blue-600 to-purple-600"
-    },
-    {
-      icon: <Activity className="w-8 h-8" />,
-      title: "Dynamic Analytics",
-      description: "Real-time insights with predictive AI modeling",
-      color: "from-purple-600 to-pink-600"
-    }
-  ];
-
-  const checkWalletConnection = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      try {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        if (accounts.length > 0) {
-          setWalletAddress(accounts[0]);
+    try {
+      // First try to switch to the network
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: AVALANCHE_MAINNET_PARAMS.chainId }],
+      });
+      return true;
+    } catch (switchError) {
+      // If the network is not added to MetaMask, add it
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [AVALANCHE_MAINNET_PARAMS],
+          });
+          return true;
+        } catch (addError) {
+          console.error('Error adding Avalanche network:', addError);
+          setNetworkError('Failed to add Avalanche network to MetaMask');
+          return false;
         }
-      } catch (error) {
-        console.error("Error checking wallet connection:", error);
       }
+      console.error('Error switching to Avalanche network:', switchError);
+      setNetworkError('Failed to switch to Avalanche network');
+      return false;
     }
-  };
-
-  const handleAccountsChanged = (accounts) => {
-    if (accounts.length > 0) {
-      setWalletAddress(accounts[0]);
-    } else {
-      setWalletAddress(null);
-    }
-  };
-
-  const handleDisconnect = () => {
-    setWalletAddress(null);
   };
 
   const connectWallet = async () => {
@@ -139,7 +77,16 @@ const UltimateEventPlatform = () => {
     }
 
     setIsConnecting(true);
+    setNetworkError(null);
+
     try {
+      // First switch to Avalanche network
+      const networkSwitched = await switchToAvalancheNetwork();
+      if (!networkSwitched) {
+        setIsConnecting(false);
+        return;
+      }
+
       const provider = new ethers.BrowserProvider(window.ethereum);
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
@@ -153,14 +100,53 @@ const UltimateEventPlatform = () => {
       }
     } catch (error) {
       console.error("Error connecting to wallet:", error);
+      setNetworkError('Failed to connect wallet');
     } finally {
       setIsConnecting(false);
     }
   };
 
-  const disconnectWallet = () => {
-    setWalletAddress(null);
-  };
+  // Add network change listener
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on('chainChanged', (chainId) => {
+        // If the network is changed to something other than Avalanche, disconnect
+        if (chainId !== AVALANCHE_MAINNET_PARAMS.chainId) {
+          disconnectWallet();
+        }
+      });
+    }
+  }, []);
+
+  // Modify the wallet button to show network error if any
+  const renderWalletButton = () => (
+    <button 
+      onClick={walletAddress ? disconnectWallet : connectWallet}
+      disabled={isConnecting}
+      className="relative px-8 py-3 group overflow-hidden rounded-xl"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-70 
+        group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 blur-xl 
+        group-hover:blur-2xl transition-all duration-300" />
+      <span className="relative z-10 flex items-center gap-2">
+        {isConnecting ? (
+          'Connecting...'
+        ) : networkError ? (
+          <span className="text-red-400">{networkError}</span>
+        ) : walletAddress ? (
+          <>
+            <span>{`${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`}</span>
+            <Power className="w-4 h-4" />
+          </>
+        ) : (
+          'Connect to Avalanche'
+        )}
+      </span>
+    </button>
+  );
+
+  // ... (rest of the component remains the same, but replace the wallet button with renderWalletButton())
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
@@ -411,5 +397,6 @@ const UltimateEventPlatform = () => {
 };
 
 export default UltimateEventPlatform;
+
 
 

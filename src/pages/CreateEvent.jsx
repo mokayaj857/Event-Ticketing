@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
 
-import contractABI from "../../../../../../../src/abi/Ticket.json";    
+import contractABI from "../abi/Ticket.json";    
 const contractAddress = "0x256ff3b9d3df415a05ba42beb5f186c28e103b2a"; //<---add address here
 
 const CreateEvent = () => {
