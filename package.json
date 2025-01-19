@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
+  "name": "ev",
+  "version": "0.1.0",
+  "private": true,  
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,6 +17,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@metamask/detect-provider": "^2.0.0",
     "@mui/material": "^6.4.0",
     "@radix-ui/react-alert-dialog": "^1.1.4",
     "@types/react-router-dom": "^5.3.3",

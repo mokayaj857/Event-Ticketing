@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Moon, Ticket, Calendar, Users, TrendingUp, ChevronRight, Star, Zap, Activity, Globe, Power } from 'lucide-react';
 import bitcoinImage from "../assets/tig.png"; 
+import bitcoinImage from "../assets/tig.png"; 
 import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
@@ -8,6 +9,56 @@ import Teams from './Teams';
 import Footer from '../components/Footer';
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
+
+// Avalanche Network Configuration
+const AVALANCHE_MAINNET_PARAMS = {
+  chainId: '0xA86A', // Hex chain ID for Avalanche Mainnet
+  chainName: 'Avalanche Mainnet',
+  nativeCurrency: {
+    name: 'AVAX',
+    symbol: 'AVAX',
+    decimals: 18
+  },
+  rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+  blockExplorerUrls: ['https://snowtrace.io/']
+};
+const ParticleField = () => {
+  return (
+    <div className="fixed inset-0 opacity-30">
+      {[...Array(50)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full animate-float"
+          style={{
+            width: `${Math.random() * 4 + 1}px`,
+            height: `${Math.random() * 4 + 1}px`,
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            background: `rgba(${Math.random() * 255}, ${Math.random() * 100 + 155}, 255, 0.6)`,
+            animationDuration: `${Math.random() * 10 + 10}s`,
+            animationDelay: `-${Math.random() * 10}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const addAvalancheNetwork = async () => {
+  if (typeof window.ethereum !== "undefined") {
+      try {
+          await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [AVALANCHE_MAINNET_PARAMS],
+          });
+          console.log("Avalanche network added successfully!");
+      } catch (error) {
+          console.error("Error adding Avalanche network:", error);
+      }
+  } else {
+      console.error("MetaMask is not installed.");
+  }
+};
 
 const ParticleField = () => {
   return (
@@ -31,6 +82,28 @@ const ParticleField = () => {
   );
 };
 
+const AnimatedCard = ({ children, delay, onClick, isSelected }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <div
+      className={`relative group transition-all duration-500 transform 
+        ${isSelected ? 'scale-105 -translate-y-2' : ''} 
+        ${isHovered ? 'translate-y-[-8px]' : ''}`}
+      style={{ animationDelay: `${delay}ms` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-xl blur-xl 
+        group-hover:blur-2xl transition-all duration-300" />
+      <div className="relative bg-black/40 backdrop-blur-xl rounded-xl border border-purple-500/30 
+        group-hover:border-purple-500/50 p-6 transition-all duration-300">
+        {children}
+      </div>
+    </div>
+  );
+};
 const AnimatedCard = ({ children, delay, onClick, isSelected }) => {
   const [isHovered, setIsHovered] = useState(false);
   
@@ -114,7 +187,82 @@ const UltimateEventPlatform = () => {
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeStat, setActiveStat] = useState(null);
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    checkWalletConnection();
+    
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('disconnect', handleDisconnect);
+    }
+
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('disconnect', handleDisconnect);
+      }
+    };
+  }, []);
+
+  const features = [
+    {
+      icon: <Ticket className="w-8 h-8" />,
+      title: "Quantum Ticketing",
+      description: "Next-gen blockchain verification with quantum security In less than 2 seconds ",
+      color: "from-purple-600 to-blue-600"
+    },
+    {
+      icon: <Globe className="w-8 h-8" />,
+      title: "Metaverse Events",
+      description: "Host virtual experiences in immersive 3D spaces",
+      color: "from-blue-600 to-purple-600"
+    },
+    {
+      icon: <Activity className="w-8 h-8" />,
+      title: "Dynamic Analytics",
+      description: "Real-time insights with predictive AI modeling",
+      color: "from-purple-600 to-pink-600"
+    }
+  ];
+
+  const checkWalletConnection = async () => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
         }
+      } catch (error) {
+        console.error("Error checking wallet connection:", error);
+      }
+    }
+  };
+
+  const handleAccountsChanged = (accounts) => {
+    if (accounts.length > 0) {
+      setWalletAddress(accounts[0]);
+    } else {
+      setWalletAddress(null);
+    }
+  };
+
+  const handleDisconnect = () => {
+    setWalletAddress(null);
       } catch (error) {
         console.error("Error checking wallet connection:", error);
       }
@@ -141,6 +289,7 @@ const UltimateEventPlatform = () => {
 
     setIsConnecting(true);
     try {
+    try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
@@ -159,6 +308,9 @@ const UltimateEventPlatform = () => {
     }
   };
 
+  const disconnectWallet = () => {
+    setWalletAddress(null);
+  };
   const disconnectWallet = () => {
     setWalletAddress(null);
   };
@@ -417,3 +569,5 @@ const UltimateEventPlatform = () => {
 };
 
 export default UltimateEventPlatform;
+
+
