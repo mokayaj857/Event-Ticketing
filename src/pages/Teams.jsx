@@ -43,10 +43,10 @@ const AnimatedTeamSection = () => {
       bio: "Driving innovation and ensuring our solutions meet real-world needs.",
       image: "/src/assets/ser.png",
       social: {
-        github: "#",
-        linkedin: "#",
+        github: "https://github.com/Savville",
+        linkedin: "www.linkedin.com/in/williams-otieno-miee-maces-b358ab33b",
         twitter: "#",
-        email: "mike@example.com"
+        email: "ochiwilliamotieno@gmail.com"
       }
     }
   ];
