@@ -16,6 +16,7 @@ import MintNFT from './pages/MintNFT';
 import Ticket from './pages/Ticket';
 import Teams from './pages/Teams';
 import './index.css';
+import WaitlistPage from './pages/WaitingList';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,12 @@ const router = createBrowserRouter([
     path: "chatbit",
     element: <Chatbit />,
   },
+
+  {
+    path: "waiting",
+    element: <WaitlistPage />
+  },
+
   {
     path: "*",
     element: <Footer />,
