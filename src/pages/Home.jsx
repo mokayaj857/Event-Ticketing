@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Moon, Ticket, Calendar, Users, TrendingUp, ChevronRight, Star, Zap, Activity, Globe } from 'lucide-react';
-import tigImage from "../assets/tig.png"; 
+import { Moon, Ticket, Calendar, Users, TrendingUp, ChevronRight, Star, Zap, Activity, Globe, Power } from 'lucide-react';
+import bitcoinImage from "../assets/tig.png"; 
 import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
 import Footer from '../components/Footer';
-import Teams from "./Teams";
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
-
 
 const ParticleField = () => {
   return (
@@ -61,6 +59,7 @@ const UltimateEventPlatform = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeStat, setActiveStat] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -69,6 +68,22 @@ const UltimateEventPlatform = () => {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    checkWalletConnection();
+    
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('disconnect', handleDisconnect);
+    }
+
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('disconnect', handleDisconnect);
+      }
+    };
   }, []);
 
   const features = [
@@ -92,21 +107,59 @@ const UltimateEventPlatform = () => {
     }
   ];
 
-  // Connect Wallet Functionality
-  const connectWallet = async () => {
-    if (window.ethereum) {
+  const checkWalletConnection = async () => {
+    if (typeof window.ethereum !== "undefined") {
       try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send('eth_requestAccounts', []); // Request account connection
-        const signer = provider.getSigner();
-        const address = await signer.getAddress();
-        setWalletAddress(address); // Store wallet address in state
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+        }
       } catch (error) {
-        console.error('Error connecting to wallet', error);
+        console.error("Error checking wallet connection:", error);
       }
-    } else {
-      alert('Please install MetaMask!');
     }
+  };
+
+  const handleAccountsChanged = (accounts) => {
+    if (accounts.length > 0) {
+      setWalletAddress(accounts[0]);
+    } else {
+      setWalletAddress(null);
+    }
+  };
+
+  const handleDisconnect = () => {
+    setWalletAddress(null);
+  };
+
+  const connectWallet = async () => {
+    if (typeof window.ethereum === "undefined") {
+      alert("Please install MetaMask to connect your wallet!");
+      return;
+    }
+
+    setIsConnecting(true);
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+      
+      if (accounts.length > 0) {
+        const signer = await provider.getSigner();
+        const address = await signer.getAddress();
+        setWalletAddress(address);
+        console.log("Connected Address:", address);
+      }
+    } catch (error) {
+      console.error("Error connecting to wallet:", error);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const disconnectWallet = () => {
+    setWalletAddress(null);
   };
 
   return (
@@ -145,32 +198,44 @@ const UltimateEventPlatform = () => {
               </div>
               
               <div className="flex items-center space-x-8">
-      {[
-        { name: 'Home', path: '/' },
-        { name: 'Events', path: '/ticketsell' },
-        { name: 'Contact', path: '/footer' },
-      ].map(({ name, path }) => (
-        <Link
-          key={name}
-          to={path}
-          className="relative group py-2"
-        >
-          <span className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300">
-            {name}
-          </span>
-          <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 
-            group-hover:w-full group-hover:left-0 transition-all duration-300" />
-        </Link>
-      ))}
+                {[
+                  { name: 'Home', path: '/' },
+                  { name: 'WaitingList', path: '/waiting' },
+                  { name: 'TicketMinting', path: '/mint' },
+                ].map(({ name, path }) => (
+                  <Link
+                    key={name}
+                    to={path}
+                    className="relative group py-2"
+                  >
+                    <span className="relative z-10 text-gray-300 group-hover:text-white transition-colors duration-300">
+                      {name}
+                    </span>
+                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 
+                      group-hover:w-full group-hover:left-0 transition-all duration-300" />
+                  </Link>
+                ))}
                 <button 
-                  onClick={connectWallet}
+                  onClick={walletAddress ? disconnectWallet : connectWallet}
+                  disabled={isConnecting}
                   className="relative px-8 py-3 group overflow-hidden rounded-xl"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-70 
                     group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 blur-xl 
                     group-hover:blur-2xl transition-all duration-300" />
-                  <span className="relative z-10">{walletAddress ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : 'Connect Wallet'}</span>
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isConnecting ? (
+                      'Connecting...'
+                    ) : walletAddress ? (
+                      <>
+                        <span>{`${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`}</span>
+                        <Power className="w-4 h-4" />
+                      </>
+                    ) : (
+                      'Connect Wallet'
+                    )}
+                  </span>
                 </button>
               </div>
             </div>
@@ -178,8 +243,7 @@ const UltimateEventPlatform = () => {
         </div>
       </nav>
 
-      {/* Hero Section with Advanced Animations */}
-      
+      {/* Hero Section */}
       <main className="relative pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-2 gap-12 items-center">
           <div className={`transition-all duration-1000 delay-300 
@@ -205,6 +269,7 @@ const UltimateEventPlatform = () => {
             </p>
 
             <div className="flex space-x-6">
+<<<<<<< HEAD
             <a href="/ticket">
               <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600" />
@@ -224,6 +289,27 @@ const UltimateEventPlatform = () => {
                   transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 <span className="relative z-10">Tickets Collection</span>
               </button>
+=======
+              <a href="/ticketsell">
+                <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 blur-xl 
+                    group-hover:blur-2xl transition-all duration-300" />
+                  <div className="relative z-10 flex items-center space-x-2">
+                    <span>Explore Events</span>
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </button>
+              </a>
+
+              <a href="/ticket">
+                <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
+                  <div className="absolute inset-0 border border-purple-500 rounded-xl" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 
+                    transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                  <span className="relative z-10">Tickets Collection</span>
+                </button>
+>>>>>>> refs/remotes/origin/frontend
               </a>
             </div>
           </div>
@@ -243,19 +329,19 @@ const UltimateEventPlatform = () => {
                 />
               ))}
               <img 
-                src={tigImage}
+                src={bitcoinImage}
                 alt="VR Experience"
-                className="relative z-10 w-3/4 h-auto object-cover rounded-3xl transform 
+                className="relative z-10 w-full h-auto object-cover rounded-3xl transform 
                   group-hover:scale-105 group-hover:rotate-3 transition-all duration-700"
               />
             </div>
           </div>
         </div>
       </main>
-      
 
-      {/* Features with Interactive Animations */}
-      <section className="py-20 px-6 relative">
+      {/* Features Section */}
+     {/* Features with Interactive Animations */}
+     <section className="py-20 px-6 relative">
       <div className="max-w-7xl mx-auto grid grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <AnimatedCard
@@ -339,11 +425,6 @@ const UltimateEventPlatform = () => {
       </section>
       <section>
         <div>
-          <Teams />
-        </div>
-      </section>
-      <section>
-        <div>
           <Footer />
         </div>
       </section>
@@ -352,3 +433,5 @@ const UltimateEventPlatform = () => {
 };
 
 export default UltimateEventPlatform;
+
+
