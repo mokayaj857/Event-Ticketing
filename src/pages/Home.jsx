@@ -231,7 +231,7 @@ const UltimateEventPlatform = () => {
                 {[
                   { name: 'Home', path: '/' },
                   { name: 'WaitingList', path: '/waiting' },
-                  { name: 'TicketMinting', path: '/mint' },
+                  //{ name: 'TicketMinting', path: '/mint' },
                 ].map(({ name, path }) => (
                   <Link
                     key={name}
