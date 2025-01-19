@@ -13,6 +13,7 @@ import Qrcode from "./pages/Qrcode";
 import ConnectWalletButton from "./components/ConnectWallet";
 import CreateEvent from "./pages/CreateEvent";
 import Ticket from "./pages/Ticket";
+import Teams from "./pages/Teams";
 import MintNFT from "./pages/MintNFT";
 const App = () => {
   return (
@@ -41,6 +42,9 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/events" element={<EventList />} />
         <Route path="/event/:eventId" element={<EventDetails />} />
+        
+        {/* Teams under Testimonials */}
+        <Route path="/teams" element={<Teams />} />
 
         {/* Additional Pages */}
         <Route path="/purchase" element={<TicketPurchase />} />

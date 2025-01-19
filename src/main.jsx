@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import Ticketsell from './pages/Ticketsell';
 import MintNFT from './pages/MintNFT';
 import Ticket from './pages/Ticket';
+import Teams from './pages/Teams';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
     element: <Ticket />,
   },
   {
+    path: "Teams",
+    element: <Teams />,
+  },
+  {
     path: "Ticketsell",
     element: <Ticketsell />
   },
@@ -46,13 +51,14 @@ const router = createBrowserRouter([
     element: <Hero />,
   },
   {
-    path: "event-list",
+    path: "event",
     element: <EventList />,
   },
   {
     path: "mint",
     element: <MintNFT />,
   },
+  
   {
     path: "event-details",
     element: <EventDetails />,

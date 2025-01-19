@@ -23,7 +23,12 @@ const Ticket = () => {
   const previewImages = [
     "/src/assets/rena.png",
     "/src/assets/rab.png",
-    "/src/assets/ast.png"
+    "/src/assets/rb.png",
+    "/src/assets/rb2.png",
+    "/src/assets/ast.png",
+    "/src/assets/rb1.png",
+    "/src/assets/rb3.png"
+
   ];
 
   return (
@@ -235,9 +240,13 @@ const Ticket = () => {
             </div>
           ))}
         </div>
+        
       </section>
     </div>
+    
+    
   );
 };
+
 
 export default Ticket;

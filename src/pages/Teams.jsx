@@ -96,7 +96,7 @@ const TeamMember = ({ member, index, isVisible }) => {
   );
 };
 
-const AnimatedTeamPage = () => {
+const Teams = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
@@ -209,4 +209,4 @@ const AnimatedTeamPage = () => {
   );
 };
 
-export default AnimatedTeamPage;
+export default Teams;

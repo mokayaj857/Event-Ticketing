@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Moon, Ticket, Calendar, Users, TrendingUp, ChevronRight, Star, Zap, Activity, Globe } from 'lucide-react';
-import bitcoinImage from "../assets/bitcoin.png"; 
+import tigImage from "../assets/tig.png"; 
 import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
 import Footer from '../components/Footer';
+import Teams from "./Teams";
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
 
@@ -242,9 +243,9 @@ const UltimateEventPlatform = () => {
                 />
               ))}
               <img 
-                src={bitcoinImage}
+                src={tigImage}
                 alt="VR Experience"
-                className="relative z-10 w-full h-auto object-cover rounded-3xl transform 
+                className="relative z-10 w-3/4 h-auto object-cover rounded-3xl transform 
                   group-hover:scale-105 group-hover:rotate-3 transition-all duration-700"
               />
             </div>
@@ -334,6 +335,11 @@ const UltimateEventPlatform = () => {
       <section>
         <div>
           <Discover />
+        </div>
+      </section>
+      <section>
+        <div>
+          <Teams />
         </div>
       </section>
       <section>
