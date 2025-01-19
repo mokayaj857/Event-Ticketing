@@ -1,212 +1,202 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
-  Users, Mail, Linkedin, Twitter, ChevronRight,
-  Code, Palette, ChartBar, Megaphone, Shield
+  Github, 
+  Linkedin, 
+  Mail,
+  Twitter,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
-const TeamMember = ({ member, index, isVisible }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div 
-      className={`transform transition-all duration-1000 cursor-pointer
-        ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}
-        ${isHovered ? 'scale-105' : 'scale-100'}`}
-      style={{ transitionDelay: `${index * 200}ms` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="relative group">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 
-          rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-        
-        {/* Card Content */}
-        <div className="relative bg-black/40 backdrop-blur-xl rounded-2xl border border-purple-500/30 
-          group-hover:border-purple-500/50 p-8 overflow-hidden">
-          
-          {/* Role Icon */}
-          <div className="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-r 
-            from-purple-600/20 to-blue-600/20 flex items-center justify-center
-            group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-            {member.icon}
-          </div>
-          
-          {/* Profile Image */}
-          <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden
-            group-hover:scale-105 transition-transform duration-500">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 
-              opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
-            <img 
-              src={`/api/placeholder/${200}/${200}`}
-              alt={member.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          
-          {/* Name and Role */}
-          <div className="text-center mb-6">
-            <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-blue-400 
-              bg-clip-text text-transparent group-hover:from-purple-300 group-hover:to-blue-300 
-              transition-all duration-300">
-              {member.name}
-            </h3>
-            <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
-              {member.role}
-            </p>
-          </div>
-          
-          {/* Skills */}
-          <div className="mb-6">
-            <div className="flex flex-wrap gap-2 justify-center">
-              {member.skills.map((skill, idx) => (
-                <span 
-                  key={idx}
-                  className="px-3 py-1 rounded-full text-sm bg-purple-500/10 border border-purple-500/20
-                    group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-300"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          
-          {/* Social Links */}
-          <div className="flex justify-center space-x-4">
-            {['mail', 'linkedin', 'twitter'].map((platform, idx) => (
-              <button 
-                key={platform}
-                className="p-2 rounded-full bg-purple-500/10 hover:bg-purple-500/20 
-                  transform hover:scale-110 transition-all duration-300"
-                style={{ transitionDelay: `${idx * 50}ms` }}
-              >
-                {platform === 'mail' && <Mail className="w-5 h-5" />}
-                {platform === 'linkedin' && <Linkedin className="w-5 h-5" />}
-                {platform === 'twitter' && <Twitter className="w-5 h-5" />}
-              </button>
-            ))}
-          </div>
-
-          {/* Hover Effect Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 to-blue-600/0 
-            group-hover:from-purple-600/5 group-hover:to-blue-600/5 transition-all duration-500 rounded-2xl" />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Teams = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
-  useEffect(() => {
-    setIsVisible(true);
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+const AnimatedTeamSection = () => {
+  const [activeIndex, setActiveIndex] = useState(1); // Start with middle card active
+  const [isHovering, setIsHovering] = useState(false);
 
   const teamMembers = [
     {
-      name: "Sarah Mitchell",
-      role: "Chief Technology Officer",
-      icon: <Code className="w-6 h-6" />,
-      skills: ["Technical Leadership", "System Architecture", "Innovation Strategy"]
+      name: "John Mokaya",
+      role: "Lead Developer",
+      bio: "Passionate about creating seamless user experiences and solving complex problems.",
+      image: "/src/assets/juni.png",
+      social: {
+        github: "https://github.com/mokayaj857",
+        linkedin: "http://www.linkedin.com/in/john-mokaya-3b926a261",
+        twitter: "http://x.com/BBjuniour",
+        email: "mokayaj@ieee.org"
+      }
     },
     {
-      name: "Alex Chen",
-      role: "Lead Designer",
-      icon: <Palette className="w-6 h-6" />,
-      skills: ["UI/UX Design", "Brand Identity", "Motion Design"]
+      name: "Brandistone Mabeya",
+      role: "UI/UX Designer",
+      bio: "Bringing creative visions to life through intuitive and beautiful designs.",
+      image: "/src/assets/brandi.png",
+      social: {
+        github: "#",
+        linkedin: "#",
+        twitter: "#",
+        email: "mokayaj@ieee.org"
+      }
     },
     {
-      name: "Marcus Johnson",
-      role: "Data Analytics Lead",
-      icon: <ChartBar className="w-6 h-6" />,
-      skills: ["Data Science", "Machine Learning", "Business Intelligence"]
-    },
-    {
-      name: "Emma Rodriguez",
-      role: "Marketing Director",
-      icon: <Megaphone className="w-6 h-6" />,
-      skills: ["Digital Marketing", "Brand Strategy", "Content Creation"]
-    },
-    {
-      name: "David Kim",
-      role: "Security Engineer",
-      icon: <Shield className="w-6 h-6" />,
-      skills: ["Cybersecurity", "Risk Management", "Cloud Security"]
+      name: "Williams Otieno",
+      role: "Backend Developer",
+      bio: "Driving innovation and ensuring our solutions meet real-world needs.",
+      image: "/src/assets/ser.png",
+      social: {
+        github: "#",
+        linkedin: "#",
+        twitter: "#",
+        email: "mike@example.com"
+      }
     }
   ];
 
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % teamMembers.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + teamMembers.length) % teamMembers.length);
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
-      {/* Particle Background */}
-      <div className="fixed inset-0 opacity-30">
-        {[...Array(30)].map((_, i) => (
+    <section className="relative bg-black/90 overflow-hidden py-24">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full animate-float"
+            className="absolute rounded-full mix-blend-screen animate-float-slow"
             style={{
-              width: `${Math.random() * 4 + 1}px`,
-              height: `${Math.random() * 4 + 1}px`,
+              width: `${Math.random() * 300 + 100}px`,
+              height: `${Math.random() * 300 + 100}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              background: `rgba(${Math.random() * 255}, ${Math.random() * 100 + 155}, 255, 0.6)`,
-              animationDuration: `${Math.random() * 10 + 10}s`,
-              animationDelay: `-${Math.random() * 10}s`,
+              background: `radial-gradient(circle, rgba(147,51,234,0.1) 0%, rgba(0,0,0,0) 70%)`,
+              animationDelay: `${i * 2}s`,
+              animationDuration: `${20 + Math.random() * 10}s`
             }}
           />
         ))}
       </div>
 
-      {/* Mouse Follow Effect */}
-      <div 
-        className="fixed w-64 h-64 pointer-events-none z-10 transition-transform duration-100"
-        style={{
-          transform: `translate(${mousePosition.x - 128}px, ${mousePosition.y - 128}px)`,
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl" />
+      {/* Section Header */}
+      <div className="relative max-w-7xl mx-auto px-6 mb-16 text-center">
+        <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r 
+          from-purple-400 to-blue-400 mb-4 animate-fade-in">
+          Meet Our Team
+        </h2>
+        <p className="text-gray-400 max-w-2xl mx-auto animate-slide-up">
+          The talented individuals behind our success, working together to deliver exceptional experiences.
+        </p>
       </div>
 
-      {/* Content */}
-      <div className="relative z-20">
-        {/* Header Section */}
-        <div className="text-center pt-20 pb-16 px-6">
-          <div className="max-w-3xl mx-auto">
-            <h1 className={`text-5xl font-bold mb-6 transition-all duration-1000 
-              ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Meet Our Exceptional Team
-              </span>
-            </h1>
-            <p className={`text-xl text-gray-400 transition-all duration-1000 delay-300
-              ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-              A diverse group of passionate individuals working together to create extraordinary experiences
-            </p>
-          </div>
-        </div>
+      {/* Team Cards Container */}
+      <div className="relative max-w-7xl mx-auto px-6">
+        <div className="relative h-[600px] flex items-center justify-center">
+          {/* Navigation Buttons */}
+          <button 
+            onClick={prevSlide}
+            className="absolute left-4 z-20 p-3 bg-purple-600/20 rounded-full hover:bg-purple-600/40 
+              transition-all duration-300 group"
+          >
+            <ChevronLeft className="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform" />
+          </button>
+          
+          <button 
+            onClick={nextSlide}
+            className="absolute right-4 z-20 p-3 bg-purple-600/20 rounded-full hover:bg-purple-600/40 
+              transition-all duration-300 group"
+          >
+            <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
+          </button>
 
-        {/* Team Grid */}
-        <div className="max-w-7xl mx-auto px-6 pb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <TeamMember 
-                key={index}
-                member={member}
-                index={index}
-                isVisible={isVisible}
-              />
-            ))}
+          {/* Team Cards */}
+          <div className="relative w-full h-full flex items-center justify-center">
+            {teamMembers.map((member, index) => {
+              const isActive = index === activeIndex;
+              const offset = index - activeIndex;
+              
+              return (
+                <div
+                  key={index}
+                  className={`absolute w-80 transition-all duration-500 ease-out`}
+                  style={{
+                    transform: `translateX(${offset * 120}%) scale(${isActive ? 1 : 0.8}) 
+                      translateZ(${isActive ? 0 : -100}px)`,
+                    zIndex: isActive ? 10 : 5,
+                    opacity: Math.abs(offset) > 1 ? 0 : 1,
+                  }}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                >
+                  <div className={`relative group ${isActive ? 'cursor-default' : 'cursor-pointer'}`}>
+                    {/* Card Background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 
+                      rounded-2xl backdrop-blur-sm group-hover:from-purple-600/20 group-hover:to-blue-600/20 
+                      transition-all duration-500" />
+                    
+                    {/* Card Content */}
+                    <div className="relative p-6 space-y-4">
+                      {/* Image Container */}
+                      <div className="relative w-48 h-48 mx-auto mb-6 group-hover:scale-105 
+                        transition-transform duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 
+                          rounded-full opacity-75 animate-pulse" />
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] rounded-full 
+                            object-cover border-4 border-black"
+                        />
+                      </div>
+
+                      {/* Member Info */}
+                      <div className="text-center transform transition-all duration-500">
+                        <h3 className="text-xl font-semibold text-white mb-1 group-hover:scale-105">
+                          {member.name}
+                        </h3>
+                        <p className="text-purple-400 font-medium mb-3">{member.role}</p>
+                        <p className="text-gray-400 text-sm leading-relaxed mb-4 
+                          opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                          {member.bio}
+                        </p>
+                      </div>
+
+                      {/* Social Links */}
+                      {isActive && (
+                        <div className="flex justify-center space-x-3 opacity-0 group-hover:opacity-100 
+                          transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                          {[
+                            { Icon: Github, link: member.social.github },
+                            { Icon: Linkedin, link: member.social.linkedin },
+                            { Icon: Twitter, link: member.social.twitter },
+                            { Icon: Mail, link: `mailto:${member.social.email}` }
+                          ].map(({ Icon, link }, socialIndex) => (
+                            <a
+                              key={socialIndex}
+                              href={link}
+                              className="group relative p-2"
+                            >
+                              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 
+                                rounded-lg opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 
+                                transition-all duration-300" />
+                              <Icon className="w-5 h-5 relative z-10 text-gray-400 group-hover:text-white 
+                                transition-colors" />
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Teams;
+export default AnimatedTeamSection;

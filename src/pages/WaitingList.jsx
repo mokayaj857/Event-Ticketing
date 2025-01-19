@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Star, Users, ChevronRight, Zap } from 'lucide-react';
 
+
 const ParticleField = () => {
   return (
     <div className="fixed inset-0 opacity-30">

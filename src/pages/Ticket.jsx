@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+import Chatbit from './Chatbit';
 import { 
   Wallet, 
   Image as ImageIcon, 
@@ -49,7 +51,8 @@ const Ticket = () => {
     "/src/assets/rb2.png",
     "/src/assets/ast.png",
     "/src/assets/rb1.png",
-    "/src/assets/rb3.png"
+    "/src/assets/blogo.png"
+  ];
 
   useEffect(() => {
     setIsVisible(true);
@@ -403,6 +406,12 @@ const Ticket = () => {
               </div>
             </div>
           ))}
+
+      <section>
+        <div>
+          <Chatbit />
+        </div>
+      </section>
         </div>
         
       </section>
@@ -413,4 +422,3 @@ const Ticket = () => {
 };
 
 export default Ticket;
-

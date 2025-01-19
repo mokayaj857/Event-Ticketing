@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import imImage from "../assets/im.png";
+import Chatbit from './Chatbit';
 import { 
   Ticket, 
   Wallet, 
@@ -188,6 +189,11 @@ const TokenizedTicketing = () => {
           flex items-center space-x-3 hover:shadow-lg hover:shadow-purple-500/20 transition-all">
           <Wallet className="w-5 h-5" />
           <span>Connect Wallet</span>
+          <section>
+            <div>
+              <Chatbit />
+            </div>
+          </section>
         </button>
       </div>
     </div>

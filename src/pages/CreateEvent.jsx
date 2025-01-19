@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
+import Chatbit from './Chatbit';
 
 import contractABI from "../abi/Ticket.json";    
 const contractAddress = "0x256ff3b9d3df415a05ba42beb5f186c28e103b2a"; //<---add address here
@@ -108,6 +109,11 @@ const CreateEvent = () => {
             className="bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600 transition duration-300"
           >
             Create Event
+      <section>
+        <div>
+          <Chatbit />
+        </div>
+      </section>
           </button>
         </div>
       </form>

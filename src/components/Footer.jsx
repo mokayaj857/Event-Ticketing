@@ -9,6 +9,7 @@ import {
   MapPin,
   ArrowUp,
   Heart
+
 } from 'lucide-react';
 
 const AnimatedFooter = () => {

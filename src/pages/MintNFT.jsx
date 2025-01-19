@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import contractABI from "../abi/Ticket.json";
 import { Loader2 } from 'lucide-react';
+
 
 const contractAddress = '0x256ff3b9d3df415a05ba42beb5f186c28e103b2a'; // Replace with your NFT contract address
 
