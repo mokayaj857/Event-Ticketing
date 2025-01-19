@@ -120,19 +120,19 @@ const UltimateEventPlatform = () => {
     {
       icon: <Ticket className="w-8 h-8" />,
       title: "Quantum Ticketing",
-      description: "Next-gen blockchain verification with quantum security In less than 2 seconds ",
+      description: "Next-gen blockchain verification with quantum security In less than 2 seconds only on Avalance ",
       color: "from-purple-600 to-blue-600"
     },
     {
       icon: <Globe className="w-8 h-8" />,
-      title: "Metaverse Events",
-      description: "Host virtual experiences in immersive 3D spaces",
+      title: "Maximizing Saving on Events",
+      description: "Leveraging Avalanche's Low Fees for More Affordable Event Ticketing",
       color: "from-blue-600 to-purple-600"
     },
     {
       icon: <Activity className="w-8 h-8" />,
-      title: "Dynamic Analytics",
-      description: "Real-time insights with predictive AI modeling",
+      title: "Your Tickets, Your Security",
+      description: "Safeguard Your Tickets with Avalanche’s Trusted Blockchain Technology",
       color: "from-purple-600 to-pink-600"
     }
   ];
@@ -231,7 +231,7 @@ const UltimateEventPlatform = () => {
                 {[
                   { name: 'Home', path: '/' },
                   { name: 'WaitingList', path: '/waiting' },
-                  //{ name: 'TicketMinting', path: '/mint' },
+                  { name: 'TicketMinting', path: '/mint' },
                 ].map(({ name, path }) => (
                   <Link
                     key={name}
@@ -382,8 +382,8 @@ const UltimateEventPlatform = () => {
           {[
             { value: "100K+", label: "Active Users", icon: <Users />, color: "purple" },
             { value: "50K+", label: "Events Hosted", icon: <Calendar />, color: "blue" },
-            { value: "1M+", label: "Tickets Sold", icon: <Ticket />, color: "indigo" },
-            { value: "99%", label: "Success Rate", icon: <Star />, color: "violet" }
+            { value: "1M+", label: "Tickets Sold", icon: <Ticket />, color: "purple" },
+            { value: "99%", label: "Security  Assurance", icon: <Star />, color: "blue" }
           ].map((stat, index) => (
             <div
               key={index}
