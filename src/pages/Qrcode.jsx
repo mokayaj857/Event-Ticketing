@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import QRCode from 'react-qr-code';
 import { ethers } from 'ethers';
 import Chatbit from './Chatbit';
-import { 
-  Shield, CheckCircle, XCircle, RefreshCw, 
-  Ticket, Lock, Scan, Globe, AlertTriangle 
-} from 'lucide-react';
+import { Shield, CheckCircle, XCircle, RefreshCw, Ticket, Lock, Scan, Globe, AlertTriangle } from 'lucide-react';
 
 // Minimal ABI for ticket verification contract
 const MINIMAL_ABI = [
@@ -257,13 +254,15 @@ const QRVerificationSystem = () => {
     } catch (err) {
       console.error('Verification error:', err);
       if (err.code === 4001) {
-        setError('You rejected the network switch. Please switch to Avalanche network.');
+        // User rejected the transaction, reset the verification status without showing an error
+        setVerificationStatus(null);
       } else if (err.code === -32602) {
         setError('Invalid request. Please check your MetaMask connection.');
+        setVerificationStatus('error');
       } else {
         setError(err.message || 'Verification failed');
+        setVerificationStatus('error');
       }
-      setVerificationStatus('error');
     } finally {
       setIsVerifying(false);
     }
@@ -292,12 +291,6 @@ const QRVerificationSystem = () => {
           )}
         </div>
 
-        {/* Error Display */}
-        {error && (
-          <div className="mb-4 p-4 bg-red-900/20 border border-red-500/20 rounded-xl text-center">
-            <p className="text-red-400">{error}</p>
-          </div>
-        )}
 
         {/* Main Content */}
         <div className="text-center mb-16">
@@ -411,18 +404,19 @@ const QRVerificationSystem = () => {
                     <span>Verify on Avalanche</span>
                   </button>
                 )}
-                <section>
-                  <div>
-                    <Chatbit />
-                  </div>
-                </section>
               </div>
             </div>
           </div>
         </div>
+        <section>
+          <div>
+            <Chatbit />
+          </div>
+        </section>
       </div>
     </div>
   );
 };
 
 export default QRVerificationSystem;
+
