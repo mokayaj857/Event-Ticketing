@@ -5,6 +5,7 @@ import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
 import Footer from '../components/Footer';
+import Teams from './Teams';
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
 
@@ -432,6 +433,11 @@ const UltimateEventPlatform = () => {
       </section>
       <section>
         <div>
+          <Teams />
+        </div>
+      </section>
+      <section>
+        <div>
           <Footer />
         </div>
       </section>
@@ -440,5 +446,3 @@ const UltimateEventPlatform = () => {
 };
 
 export default UltimateEventPlatform;
-
-
