@@ -54,10 +54,10 @@ A secure marketplace for ticket holders to resell their tickets, maintaining the
 
 ## Team Members
 * Brandistone Nyabonyi Mabeya – FrontEnd Developer
-* William - SmartContract Developer
-* John Mokaya -FronEnd Developer
+* Williams Ochieng - SmartContract Developer
+* John Mokaya - FronEnd Developer
 * Stanley Kariuki - SmartContract Developer
-* Phelix BackEnd Developet
+* Phelix BackEnd - Developet
 
 ## Milestones
 
