@@ -27,7 +27,7 @@ const Ticket = () => {
     "/src/assets/rb2.png",
     "/src/assets/ast.png",
     "/src/assets/rb1.png",
-    "/src/assets/rb3.png"
+    "/src/assets/blogo.png"
 
   ];
 

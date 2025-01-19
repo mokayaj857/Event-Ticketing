@@ -50,7 +50,7 @@ const App = () => {
         <Route path="/purchase" element={<TicketPurchase />} />
         <Route path="/connect wallet" element={<ConnectWalletButton />} />
         <Route path="/footer" element={<Footer />} />
-        <Route path="/create-event" element={<CreateEvent />} />
+        <Route path="/create" element={<CreateEvent />} />
         <Route path="/mint" element={<MintNFT />} />
       </Routes>
 

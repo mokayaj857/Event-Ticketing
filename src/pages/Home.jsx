@@ -205,7 +205,7 @@ const UltimateEventPlatform = () => {
             </p>
 
             <div className="flex space-x-6">
-            <a href="/ticketsell">
+            <a href="/ticket">
               <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 blur-xl 
@@ -218,7 +218,7 @@ const UltimateEventPlatform = () => {
               </a>
 
               <a href ="/ticket">
-              <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
+                <button className="group relative px-8 py-4 rounded-xl overflow-hidden">
                 <div className="absolute inset-0 border border-purple-500 rounded-xl" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 
                   transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
