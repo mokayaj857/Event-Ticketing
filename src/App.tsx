@@ -16,6 +16,7 @@ import Ticket from "./pages/Ticket";
 import Teams from "./pages/Teams";
 import MintNFT from "./pages/MintNFT";
 import WaitlistPage from "./pages/WaitingList";
+import QuantumTicketResale from "./pages/QuantamTicketResale";
 const App = () => {
   return (
     <Router>
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/create" element={<CreateEvent />} />
         <Route path="/mint" element={<MintNFT />} />
         <Route path="/waiting" element={<WaitlistPage />} />
+        <Route path="/resell" element={<QuantumTicketResale />} />
       </Routes>
 
       {/* Footer Component - Displayed on all pages */}

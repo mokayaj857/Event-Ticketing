@@ -31,10 +31,10 @@ const AnimatedTeamSection = () => {
       bio: "Bringing creative visions to life through intuitive and beautiful designs.",
       image: "/src/assets/brandi.png",
       social: {
-        github: "#",
-        linkedin: "#",
-        twitter: "#",
-        email: "mokayaj@ieee.org"
+        github: "https://github.com/brandistone",
+        linkedin: "https://www.linkedin.com/in/brandistone-mabeya/",
+        twitter: "https://x.com/nyabonyibrandie",
+        email: "brandymabeya@gmail.com"
       }
     },
     {

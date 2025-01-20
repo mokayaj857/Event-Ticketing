@@ -17,6 +17,7 @@ import Ticket from './pages/Ticket';
 import Teams from './pages/Teams';
 import './index.css';
 import WaitlistPage from './pages/WaitingList';
+import QuantumTicketResale from './pages/QuantamTicketResale';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
   {
     path: "waiting",
     element: <WaitlistPage />
+  },
+
+  {
+    path: "resell",
+    element: <QuantumTicketResale />
   },
 
   {

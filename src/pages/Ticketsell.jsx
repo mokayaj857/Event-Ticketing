@@ -112,7 +112,7 @@ const TokenizedTicketing = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex space-x-4 mb-8">
             {['buy', 'create', 'resell'].map((section) => (
-              <a href= "/qrcode">
+              <a href= "/resell">
               <button
                 key={section}
                 className={`px-6 py-3 rounded-lg transition-all duration-300 relative overflow-hidden
