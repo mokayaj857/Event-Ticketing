@@ -32,7 +32,7 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 
 
 ### Languages & Frameworks
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+https://www.google.com/imgres?q=javascript&imgurl=https%3A%2F%2Fmiro.medium.com%2Fv2%2Fresize%3Afit%3A344%2F1*tZHcs0d7MAG-BBcjBekZYA.png&imgrefurl=https%3A%2F%2Ffranchell.medium.com%2Fwhy-is-javascript-so-popular-6a44982ccf5c&docid=gP9IGY_S29ed4M&tbnid=6hmWQ5EZuvhWuM&vet=12ahUKEwidl96Qi4eLAxXd9LsIHa5PK3sQM3oECF0QAA..i&w=344&h=390&hcb=2&ved=2ahUKEwidl96Qi4eLAxXd9LsIHa5PK3sQM3oECF0QAA
 ![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
