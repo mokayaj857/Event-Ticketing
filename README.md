@@ -30,16 +30,19 @@
 
 ### 🧑‍💻 Languages & Frameworks
 
-- **Smart Contracts:** Solidity
-- **Frontend:** TypeScript, Next.js
-- **Backend:** Node.js
+-### Languages & Frameworks
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-### ⛓️ Blockchain & Tools
+### Blockchain
+![Avalanche](https://img.shields.io/badge/Avalanche-E84142?style=for-the-badge&logo=avalanche&logoColor=white)
+![Web3.js](https://img.shields.io/badge/Web3.js-F16822?style=for-the-badge&logo=web3.js&logoColor=white)
 
-- **Blockchain:** Avalanche
-- **Development Tools:** Hardhat, Ethers.js
-- **Wallet Integration:** Avalanche Wallet SDK
-
+### Development Tools
+![Hardhat](https://img.shields.io/badge/Hardhat-FFF100?style=for-the-badge&logo=hardhat&logoColor=black)
+![OpenZeppelin](https://img.shields.io/badge/OpenZeppelin-4E5EE4?style=for-the-badge&logo=OpenZeppelin&logoColor=white)
+![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
 ## 🚀 Getting Started
 
 ### 📋 Prerequisites
