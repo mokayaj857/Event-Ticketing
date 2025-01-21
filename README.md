@@ -104,20 +104,30 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 
 ### 🌐 Waitlist Landing Page Integration
 
-**Objective:** Build a community-driven landing page to capture early adopters and gather feedback.
+<img width="945" alt="Screenshot 2025-01-21 151558" src="https://github.com/user-attachments/assets/36aff1b1-6c2f-476d-b0ea-8729c0a52148" />
+
 
 #### Key Deliverables:
 
 1. **Landing Page Design**
 
-   - Engaging UI/UX with a focus on conversion.
-   - Capture user interest via name, email, and preferences.
+   <img width="948" alt="Screenshot 2025-01-21 151517" src="https://github.com/user-attachments/assets/786b0fb1-92c5-4433-89bd-6c7282ea8e69" />
 
-2. **Backend Integration**
+2. **Tickets collection**
+   <img width="950" alt="Screenshot 2025-01-21 161518" src="https://github.com/user-attachments/assets/cd58022e-d42d-4327-b3f6-ec45d496d4d8" />
+   
+3. **Ticket sales**
 
-   - Securely store form data using Firebase or Google Sheets.
+ <img width="960" alt="Screenshot 2025-01-21 151643" src="https://github.com/user-attachments/assets/a222522c-71fc-47df-b6f0-a775ed58cd11" />
 
-3. **Go Live!**
+4. **Ticket Minting**
+   <img width="959" alt="Screenshot 2025-01-21 151623" src="https://github.com/user-attachments/assets/f773d40b-760f-4021-aaf0-0ea4d87e677e" />
+
+4. **QR code Intergration**
+   <img width="947" alt="Screenshot 2025-01-21 162251" src="https://github.com/user-attachments/assets/99520049-8a10-4ae3-b538-2e6b0bc5df7b" />
+
+
+5. **Go Live!**
 
    - Promote the page across social media and mailing lists.
 
@@ -125,8 +135,11 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 
 ### 🚀 Why Avalanche?
 
-- **Speed & Efficiency:** Lightning-fast finality for instant ticket transfers.
+- **Speed & Efficiency:** Lightning-fast finality for instant ticket transfers within 2 seconds.
 - **Low Costs:** Affordable transactions for users and event organizers.
+- **💰 Cost Efficiency**
+   - Minimal transaction fees
+   - Economical for both users and operators
 
 ### 🔗 Deployment Strategy
 
@@ -138,5 +151,7 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 Eventverse is redefining event ticketing by combining blockchain security with intuitive user experiences. Stay tuned for exciting updates and new features as we shape the future of event access!
 
 ## 📊 Project Status
-
+![Development Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Build Status](https://img.shields.io/badge/Build-Passing-success?style=for-the-badge)
+![Test Coverage](https://img.shields.io/badge/Coverage-85%25-green?style=for-the-badge)
 
