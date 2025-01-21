@@ -111,22 +111,39 @@ const TokenizedTicketing = () => {
         {/* Token Actions */}
         <div className="max-w-7xl mx-auto">
           <div className="flex space-x-4 mb-8">
-            {['buy', 'create', 'resell'].map((section) => (
-              <a href= "/resell">
-              <button
-                key={section}
-                className={`px-6 py-3 rounded-lg transition-all duration-300 relative overflow-hidden
-                  ${selectedSection === section ? 'text-white' : 'text-gray-400'}`}
-                onClick={() => setSelectedSection(section)}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 
-                  transition-opacity duration-300 ${selectedSection === section ? 'opacity-100' : ''}`} />
-                <span className="relative z-10">
-                  {section.charAt(0).toUpperCase() + section.slice(1)} Tickets
-                </span>
-              </button>
-              </a>
-            ))}
+       <a href="/qrcode" className="inline-block">
+      <button className="relative px-6 py-3 rounded-xl overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <span className="relative text-white font-medium">
+          Buy Tickets
+        </span>
+        <div className="absolute inset-0 shadow-lg shadow-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </button>
+      </a>
+
+      <a href="/buy" className="inline-block">
+      <button className="relative px-6 py-3 rounded-xl overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <span className="relative text-white font-medium">
+          Create Event
+        </span>
+        <div className="absolute inset-0 shadow-lg shadow-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </button>
+      </a>
+
+          
+          <a href="/resell" className="inline-block">
+      <button className="relative px-6 py-3 rounded-xl overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <span className="relative text-white font-medium">
+          Resell
+        </span>
+        <div className="absolute inset-0 shadow-lg shadow-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </button>
+      </a>
           </div>
 
           {/* Event Cards */}
@@ -205,3 +222,4 @@ const TokenizedTicketing = () => {
 };
 
 export default TokenizedTicketing;
+
