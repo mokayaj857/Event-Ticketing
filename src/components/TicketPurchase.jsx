@@ -1,4 +1,4 @@
-//Initial blocks of Code commented down below
+//Initial blocks of Code commented at the bottom
 
 import React, { useState } from "react";
 import { ethers } from "ethers"; // Ensure ethers.js is installed
