@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-// import { ethers } from 'ethers';
-
-// import contractABI from "/src/abi/Ticket.json";
-
-// const contractAddress = "........"; //<---add address here
-// const contract = new ethers.Contract(contractAddress, contractABI, provider);
-
+import { ethers } from 'ethers';
+import contractABI from "../src/abi/Ticket.json";
 
 const CreateEvent = () => {
   const [eventData, setEventData] = useState({
@@ -37,7 +32,9 @@ const CreateEvent = () => {
       const signer = provider.getSigner();
 
       // Connect to the contract
-      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      
+      const contractAddress = "0x256ff3b9d3df415a05ba42beb5f186c28e103b2a"; //<---add address here
+      const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
       // Send the transaction to the blockchain
       const tx = await contract.createEvent(
