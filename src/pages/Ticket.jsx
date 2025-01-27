@@ -436,7 +436,7 @@ const Ticket = () => {
                     ) : (
                       <Sparkles className="w-5 h-5" />
                     )}
-                    <span>{isLoading ? 'Minting...' : 'Buy Now'}</span>
+                    <span>{isLoading ? 'Purchasing...' : 'Buy Now'}</span>
                   </div>
                 </button>
 
@@ -451,7 +451,7 @@ const Ticket = () => {
                 {/* Minting Progress */}
                 <div className="mt-6 text-center text-sm text-gray-400">
                   <div className="mb-2 flex justify-between">
-                    <span>Minted</span>
+                    <span>Purchased</span>
                     <span className="font-bold">2,431 / 10,000</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-purple-500/20 overflow-hidden">

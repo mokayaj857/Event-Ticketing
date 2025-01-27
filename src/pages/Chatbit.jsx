@@ -74,7 +74,7 @@ const FloatingButton = () => {
           {/* Header */}
           <div className="flex justify-between items-center border-b pb-3">
             <h3 className="text-lg font-bold text-blue-600 flex items-center">
-              <span className="mr-2">🤖</span> AI Assistant
+              <span className="mr-2">🤖</span> EventVerse Assistant
             </h3>
             <button
               className="text-red-500 font-bold hover:text-red-700 transition"
@@ -124,14 +124,14 @@ const FloatingButton = () => {
           <div className="mt-3 flex">
             <input
               type="text"
-              className="flex-1 border border-blue-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="flex-1 border border-blue-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-black bg-white overflow-visible"
               placeholder="Type your question..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
             />
             <button
-              className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-r-lg shadow-md hover:scale-105 active:scale-95 transition"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 text-black px-4 py-2 rounded-r-lg shadow-md hover:scale-105 active:scale-95 transition"
               onClick={handleSendMessage}
             >
               Send
