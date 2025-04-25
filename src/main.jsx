@@ -15,6 +15,7 @@ import Ticketsell from './pages/Ticketsell';
 import MintNFT from './pages/MintNFT';
 import Ticket from './pages/Ticket';
 import Teams from './pages/Teams';
+import Layout from './Layout';
 import './index.css';
 import WaitlistPage from './pages/WaitingList';
 import QuantumTicketResale from './pages/QuantamTicketResale';
@@ -22,48 +23,48 @@ import QuantumTicketResale from './pages/QuantamTicketResale';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Layout><Home /></Layout>,
   },
   {
     path: "discover",
-    element: <Discover />,
+    element: <Layout><Discover /></Layout>,
   },
   {
     path: "testimonials",
-    element: <Testimonials />,
+    element: <Layout><Testimonials /></Layout>,
   },
   {
     path: "qrcode",
-    element: <Qrcode />,
+    element: <Layout><Qrcode /></Layout>,
   },
   {
     path: "ticket",
-    element: <Ticket />,
+    element: <Layout><Ticket /></Layout>,
   },
   {
-    path: "Teams",
-    element: <Teams />,
+    path: "teams",
+    element: <Layout><Teams /></Layout>,
   },
   {
-    path: "Ticketsell",
-    element: <Ticketsell />
+    path: "ticketsell",
+    element: <Layout><Ticketsell /></Layout>
   },
   {
     path: "hero",
-    element: <Hero />,
+    element: <Layout><Hero /></Layout>,
   },
   {
     path: "event",
-    element: <EventList />,
+    element: <Layout><EventList /></Layout>,
   },
   {
     path: "mint",
-    element: <MintNFT />,
+    element: <Layout><MintNFT /></Layout>,
   },
   
   {
     path: "event-details",
-    element: <EventDetails />,
+    element: <Layout><EventDetails /></Layout>,
   },
   {
     path: "chatbit",
@@ -72,12 +73,12 @@ const router = createBrowserRouter([
 
   {
     path: "waiting",
-    element: <WaitlistPage />
+    element: <Layout><WaitlistPage /></Layout>
   },
 
   {
     path: "resell",
-    element: <QuantumTicketResale />
+    element: <Layout><QuantumTicketResale /></Layout>
   },
 
   {
