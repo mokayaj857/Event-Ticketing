@@ -26,15 +26,15 @@ const AnimatedTeamSection = () => {
       }
     },
     {
-      name: "Brandistone Mabeya",
-      role: "UI/UX Designer",
-      bio: "Bringing creative visions to life through intuitive and beautiful designs.",
-      image: "/src/assets/brandi.png",
+      name: "Joseph Okumu",
+      role: "Full-Stack Developer",
+      bio: "Building sustainable solutions using technology.",
+      image: "/src/assets/joseph.png",
       social: {
-        github: "https://github.com/brandistone",
-        linkedin: "https://www.linkedin.com/in/brandistone-mabeya/",
-        twitter: "https://x.com/nyabonyibrandie",
-        email: "brandymabeya@gmail.com"
+        github: "https://github.com/JosephOkumu",
+        linkedin: "https://www.linkedin.com/in/JosephOkumu",
+        twitter: "https://x.com/jaykush_0",
+        email: "jokumu25@gmail.com"
       }
     },
     {
