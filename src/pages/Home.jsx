@@ -4,7 +4,7 @@ import bitcoinImage from "../assets/tig.png";
 import Chatbit from './Chatbit';
 import Testimonials from './Testimonials';
 import Discover from './Discover';
-import Footer from '../components/Footer';
+// Footer is now handled elsewhere in the application
 import Teams from './Teams';
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
@@ -369,11 +369,7 @@ const UltimateEventPlatform = () => {
           <Teams />
         </div>
       </section>
-      <section>
-        <div>
-          <Footer />
-        </div>
-      </section>
+      {/* Footer section removed to fix duplicate footer issue */}
     </div>
   );
 };
