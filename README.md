@@ -11,6 +11,13 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 - Event organizers can mint unique, tamper-proof tickets with embedded event details.
 - Blockchain-backed transparency guarantees authenticity and secure transfers.
 
+### 🤖 AI Assistant
+
+- An intelligent chatbot designed to help users navigate the EventVax platform
+- Provides accurate, context-aware answers about ticket purchasing, wallet connections, event creation, and more
+- Offers step-by-step guidance for blockchain interactions and NFT ticket management
+- Features a beautiful floating UI that's accessible throughout the platform
+
 ### 📲 QR Code Verification
 
 - Each ticket is embedded with a unique QR code for instant and tamper-proof validation.
