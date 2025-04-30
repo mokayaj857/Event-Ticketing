@@ -12,6 +12,7 @@ import {
 
 } from 'lucide-react';
 
+// This footer is now an exact copy of the landing page's footer markup
 const AnimatedFooter = () => {
   const [hoveredIcon, setHoveredIcon] = useState(null);
   const [hoveredLink, setHoveredLink] = useState(null);

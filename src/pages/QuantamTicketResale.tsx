@@ -169,9 +169,68 @@ const QuantumTicketResale = () => {
         }
       }
 
-      setResaleListings(listings)
+      // If no listings found from blockchain, add dummy listings
+      if (listings.length === 0) {
+        const dummyListings = [
+          {
+            tokenId: "42",
+            owner: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+            isForSale: true,
+            price: ethers.parseEther("0.5"),
+          },
+          {
+            tokenId: "137",
+            owner: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+            isForSale: true,
+            price: ethers.parseEther("0.75"),
+          },
+          {
+            tokenId: "256",
+            owner: "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+            isForSale: true,
+            price: ethers.parseEther("1.2"),
+          },
+          {
+            tokenId: "512",
+            owner: "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+            isForSale: true,
+            price: ethers.parseEther("0.9"),
+          },
+        ]
+        setResaleListings(dummyListings)
+      } else {
+        setResaleListings(listings)
+      }
     } catch (error) {
       console.error("Error fetching resale listings:", error)
+      // Add dummy listings in case of error
+      const dummyListings = [
+        {
+          tokenId: "42",
+          owner: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+          isForSale: true,
+          price: ethers.parseEther("0.5"),
+        },
+        {
+          tokenId: "137",
+          owner: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          isForSale: true,
+          price: ethers.parseEther("0.75"),
+        },
+        {
+          tokenId: "256",
+          owner: "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+          isForSale: true,
+          price: ethers.parseEther("1.2"),
+        },
+        {
+          tokenId: "512",
+          owner: "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+          isForSale: true,
+          price: ethers.parseEther("0.9"),
+        },
+      ]
+      setResaleListings(dummyListings)
     }
   }
 
@@ -389,24 +448,91 @@ const QuantumTicketResale = () => {
               <h2 className="text-2xl font-bold mb-4">Buy Resale Tickets</h2>
               <p className="text-gray-400 mb-6">Purchase tickets listed for resale by other users</p>
               <div className="grid gap-4">
-                {resaleListings.map((listing) => (
-                  <div
-                    key={listing.tokenId}
-                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-700 rounded-lg"
-                  >
-                    <div>
-                      <h3 className="text-lg font-semibold">Ticket #{listing.tokenId}</h3>
-                      <p className="text-sm text-gray-400">Price: {ethers.formatEther(listing.price)} AVAX</p>
-                    </div>
-                    <button
-                      onClick={() => handleBuyResaleTicket(listing.tokenId, listing.price)}
-                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors duration-300 mt-2 sm:mt-0 w-full sm:w-auto"
-                    >
-                      <ShoppingCart className="inline-block w-5 h-5 mr-2" />
-                      Buy
-                    </button>
+                {resaleListings.length > 0 ? (
+                  resaleListings.map((listing) => {
+                    // Generate random event details for dummy tickets
+                    const eventNames = [
+                      "Quantum Nexus Festival",
+                      "Blockchain Summit 2023",
+                      "Crypto Conference",
+                      "Web3 Hackathon",
+                      "NFT Art Exhibition"
+                    ];
+                    const locations = [
+                      "Virtual Reality Hall",
+                      "Metaverse Arena",
+                      "Crypto Convention Center",
+                      "Blockchain Boulevard",
+                      "Digital Domain Stadium"
+                    ];
+                    const dates = [
+                      "Dec 15, 2023",
+                      "Jan 20, 2024",
+                      "Feb 5, 2024",
+                      "Mar 12, 2024",
+                      "Apr 8, 2024"
+                    ];
+                    
+                    // Use token ID to deterministically select event details
+                    const tokenIdNum = parseInt(listing.tokenId);
+                    const eventName = eventNames[tokenIdNum % eventNames.length];
+                    const location = locations[tokenIdNum % locations.length];
+                    const date = dates[tokenIdNum % dates.length];
+                    
+                    return (
+                      <div
+                        key={listing.tokenId}
+                        className="flex flex-col p-4 border border-purple-500/30 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-300 backdrop-blur-sm"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div>
+                            <h3 className="text-lg font-semibold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                              {eventName}
+                            </h3>
+                            <p className="text-sm text-gray-300">Ticket #{listing.tokenId}</p>
+                          </div>
+                          <div className="px-3 py-1 bg-purple-600/30 rounded-full text-purple-300 text-sm font-medium">
+                            {ethers.formatEther(listing.price)} AVAX
+                          </div>
+                        </div>
+                        
+                        <div className="mb-4">
+                          <div className="flex items-center text-sm text-gray-400 mb-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            {location}
+                          </div>
+                          <div className="flex items-center text-sm text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            {date}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-700">
+                          <div className="text-xs text-gray-500">
+                            Seller: {formatAddress(listing.owner)}
+                          </div>
+                          <button
+                            onClick={() => handleBuyResaleTicket(listing.tokenId, listing.price)}
+                            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-lg transition-colors duration-300 flex items-center"
+                          >
+                            <ShoppingCart className="w-4 h-4 mr-2" />
+                            Buy Now
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-10">
+                    <div className="text-gray-400 mb-2">No tickets available for resale at the moment</div>
+                    <p className="text-sm text-gray-500">Check back later or list your own ticket for resale</p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           )}

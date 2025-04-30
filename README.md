@@ -11,6 +11,13 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 - Event organizers can mint unique, tamper-proof tickets with embedded event details.
 - Blockchain-backed transparency guarantees authenticity and secure transfers.
 
+### 🤖 AI Assistant
+
+- An intelligent chatbot designed to help users navigate the EventVax platform
+- Provides accurate, context-aware answers about ticket purchasing, wallet connections, event creation, and more
+- Offers step-by-step guidance for blockchain interactions and NFT ticket management
+- Features a beautiful floating UI that's accessible throughout the platform
+
 ### 📲 QR Code Verification
 
 - Each ticket is embedded with a unique QR code for instant and tamper-proof validation.
@@ -52,10 +59,21 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 
 ### Prerequisites
 
+1. **Install Node.js:**
 
+   ```bash
+   # For Windows: Download and install from https://nodejs.org/
+   
+   # For Ubuntu/Debian
+   sudo apt update
+   sudo apt install nodejs npm
+   
+   # For macOS with Homebrew
+   brew install node
+   ```
+   Verify installation with: `node --version` and `npm --version`
 
-
-1. **Clone the repository:**
+2. **Clone the repository:**
 
    ```bash
    git clone [repository-url]
@@ -85,6 +103,14 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 6. **Run the application locally:**
 
    ```bash
+   # First, install and run the backend server
+   cd server
+   npm install
+   npm run dev
+   
+   # In a new terminal, run the frontend
+   cd eventvax
+   npm install
    npm run dev
    ```
 
@@ -96,6 +122,7 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 | -------------------- | ------------------ | ---------------------------------------------------------------- |
 | Brandistone Nyabonyi | Frontend Developer | [brandistone@example.com](mailto\:brandistone@example.com)       |
 | Williams Ochieng     | Smart Contract Dev | [williams@example.com](mailto\:williams@example.com)             |
+| Joseph Okumu Otieno  | Full-stack Engineer| [jokumu25@gmail.com](mailto\:jokumu25@gmail.com)       |
 | John Mokaya          | Frontend Developer | [mokayaj857@gmail.com](mailto\:mokayaj857@gmail.com)         |
 | Stanley Kariuki      | Smart Contract Dev | [stanleykariuki@example.com](mailto\:stanleykariuki@example.com) |
 | Phelix               | Backend Developer  | [phelix@example.com](mailto\:phelix@example.com)                 |
