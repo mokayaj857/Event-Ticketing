@@ -1,44 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import neuralImage from "../assets/botImage.png"; // Replace with your neural network image
+import neuralImage from "../assets/botImage.png"; // This image needs to exist in your assets folder
 
-const FloatingButton = () => {
+const Chatbit = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [messages, setMessages] = useState([]); // Chat messages
   const [input, setInput] = useState(""); // User input
+  const [isLoading, setIsLoading] = useState(false);
 
-  const generateAIResponse = (userMessage) => {
-    // Simulate dynamic, creative AI responses
-    const responses = [
-      `That's a fantastic question! Here's what I think about "${userMessage}": AI can help with almost anything!`,
-      `Hmm... Let me think about "${userMessage}"... Okay, here we go!`,
-      `Oh, "${userMessage}"? I've got the perfect answer for that!`,
-      `Wow, what an interesting topic! Here's my take on "${userMessage}".`,
-      `You're really keeping me on my toes! Let's dive into "${userMessage}".`,
-    ];
-
-    // Randomly pick a response
-    const randomIndex = Math.floor(Math.random() * responses.length);
-    return responses[randomIndex];
+  // Send message to the backend API and get response
+  const sendMessageToBackend = async (message) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:8080/api/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const data = await response.json();
+      return data.response;
+      
+    } catch (error) {
+      console.error('Error sending message to API:', error);
+      return "Sorry, I'm having trouble connecting to the server right now. Please try again later.";
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim() === "") return;
 
     // Append user message
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
-
-    // Generate a creative AI response
-    setTimeout(() => {
-      const aiResponse = {
-        sender: "ai",
-        text: generateAIResponse(input),
-      };
-      setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
-
+    
+    const inputCopy = input;
     setInput(""); // Clear input field
+
+    // Add typing indicator
+    setMessages((prev) => [...prev, { sender: "ai", isTyping: true }]);
+
+    // Get response from backend
+    const aiResponse = await sendMessageToBackend(inputCopy);
+    
+    // Remove typing indicator and add actual response
+    setMessages((prev) => prev.filter(msg => !msg.isTyping));
+    setMessages((prev) => [...prev, { sender: "ai", text: aiResponse }]);
   };
 
   return (
@@ -91,7 +106,7 @@ const FloatingButton = () => {
           >
             {messages.length === 0 ? (
               <p className="text-gray-400 text-center">
-                I'm ready to help! Ask me anything!
+                I'm ready to help! Ask me anything about EventVax tickets!
               </p>
             ) : (
               messages.map((message, index) => (
@@ -106,15 +121,25 @@ const FloatingButton = () => {
                       : "text-left text-purple-600"
                   }`}
                 >
-                  <p
-                    className={`inline-block px-3 py-2 rounded-lg shadow-md ${
-                      message.sender === "user"
-                        ? "bg-blue-100"
-                        : "bg-purple-100"
-                    }`}
-                  >
-                    {message.text}
-                  </p>
+                  {message.isTyping ? (
+                    <div className="inline-block px-3 py-2 rounded-lg shadow-md bg-purple-100">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-purple-400 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <p
+                      className={`inline-block px-3 py-2 rounded-lg shadow-md ${
+                        message.sender === "user"
+                          ? "bg-blue-100"
+                          : "bg-purple-100"
+                      }`}
+                    >
+                      {message.text}
+                    </p>
+                  )}
                 </motion.div>
               ))
             )}
@@ -129,12 +154,14 @@ const FloatingButton = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+              disabled={isLoading}
             />
             <button
-              className="bg-gradient-to-r from-blue-500 to-purple-500 text-black px-4 py-2 rounded-r-lg shadow-md hover:scale-105 active:scale-95 transition"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-r-lg shadow-md hover:scale-105 active:scale-95 transition"
               onClick={handleSendMessage}
+              disabled={isLoading}
             >
-              Send
+              {isLoading ? "..." : "Send"}
             </button>
           </div>
         </motion.div>
@@ -143,4 +170,4 @@ const FloatingButton = () => {
   );
 };
 
-export default FloatingButton;
+export default Chatbit;
