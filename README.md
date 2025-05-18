@@ -76,7 +76,8 @@ Eventverse is a revolutionary blockchain-based ticketing platform engineered to 
 2. **Clone the repository:**
 
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/mokayaj857/eventvax.git
+
    ```
 
 2. **Install dependencies:**
