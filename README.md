@@ -168,7 +168,8 @@ netlify deploy --prod --dir=dist
 > Replace these placeholders with real screenshots by adding files under `public/` (e.g., `public/screenshots/`) and updating the image paths below.
 
 ### Marketplace Overview
-![Marketplace Overview](./public/og-image.svg)
+![Marketplace Overview](<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/ad70886d-5fa6-469f-9c19-d21bdb390491" />
+)
 
 ### Create Market Flow
 ![Create Market Flow](./public/placeholder.svg)
