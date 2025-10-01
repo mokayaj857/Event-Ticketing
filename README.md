@@ -150,5 +150,52 @@ netlify deploy --prod --dir=dist
 - shadcn/ui, Radix UI, Tailwind CSS
 - React and Vite communities
 
+## 👥 The Team
+
+| Name | Role | Contact |
+| ---- | ---- | ------- |
+| Brandistone Nyabonyi | Frontend Developer | brandistone@example.com |
+| Williams Ochieng | Smart Contract Developer | williams@example.com |
+| Joseph Okumu Otieno | Full‑stack Engineer | jokumu25@gmail.com |
+| John Mokaya | Frontend Developer | mokayaj857@gmail.com |
+| Stanley Kariuki | Smart Contract Developer | stanleykariuki@example.com |
+| Phelix | Backend Developer | phelix@example.com |
+
+> Want edits? Share final names/roles/emails and I’ll update the table.
+
+## 📸 Feature Snapshots
+
+> Replace these placeholders with real screenshots by adding files under `public/` (e.g., `public/screenshots/`) and updating the image paths below.
+
+### Marketplace Overview
+![Marketplace Overview](./public/og-image.svg)
+
+### Create Market Flow
+![Create Market Flow](./public/placeholder.svg)
+
+### Trading YES/NO
+![Trading YES/NO](./public/placeholder.svg)
+
+### Wallet Connection
+![Wallet Connection](./public/placeholder.svg)
+
+## 📈 Milestones
+
+### MVP Release
+- Core market creation and trading on Sui
+- Wallet integration and responsive UI
+
+![MVP Release](./public/og-image.svg)
+
+### Liquidity & Analytics Enhancements
+- Add liquidity flow and 24h volume metrics
+
+![Liquidity & Analytics](./public/placeholder.svg)
+
+### Next: Portfolio & Advanced Markets
+- Portfolio dashboard, conditional markets, and governance discovery
+
+![Roadmap Preview](./public/placeholder.svg)
+
 ## 📄 License
 MIT — see `LICENSE` for details.
