@@ -1,185 +1,154 @@
-# 🎟️ Eventverse
+<div align="center">
+
+# 🔮 seti — Sui-native Prediction Markets
+
+**Create, trade, and resolve markets on real-world events — secured by the Sui blockchain**
+
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Build](https://img.shields.io/badge/Build-Passing-success?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+
+</div>
 
 ## 🌍 Overview
 
-Eventverse is a revolutionary blockchain-based ticketing platform engineered to combat fraud and inefficiencies in the event ticketing industry. Leveraging the Avalanche blockchain, our platform empowers event organizers to issue tickets as digital tokens, ensuring secure purchases, effortless resales, and QR-code-based authentication.
+Seti is a professional-grade prediction market platform that lets anyone launch a market, add liquidity, and trade YES/NO outcomes with transparent on-chain settlement. Built for speed and usability on Sui, it features real-time pricing, wallet-native flows, and a clean, responsive interface.
+
+Try the live demo: https://seti-mvp.vercel.app/
 
 ## ✨ Key Features
 
-### 🎟️ Decentralized Ticket Minting & Transfer
+### 🏪 Marketplace & Discovery
+- **Browse live markets** across multiple categories (Crypto, Stocks, Sports, Politics, Tech, and more).
+- **Real-time pricing** for YES/NO outcomes with dynamic liquidity.
+- **Structured analytics**: 24h volume, total liquidity, and performance signals.
 
-- Event organizers can mint unique, tamper-proof tickets with embedded event details.
-- Blockchain-backed transparency guarantees authenticity and secure transfers.
+### 🧰 Market Creation
+- **One-click launch** of markets with question, description, end time, category, image, and tags.
+- **Initial liquidity** supplied in SUI with on-chain settlement.
 
-### 🤖 AI Assistant
+### 💧 Liquidity & Trading
+- **Add liquidity** to deepen markets and earn fees.
+- **Fast trades** with clear pre-trade payout and risk visibility.
 
-- An intelligent chatbot designed to help users navigate the EventVax platform
-- Provides accurate, context-aware answers about ticket purchasing, wallet connections, event creation, and more
-- Offers step-by-step guidance for blockchain interactions and NFT ticket management
-- Features a beautiful floating UI that's accessible throughout the platform
+### 🔐 Wallet-first UX
+- **Sui wallet integration** via `@mysten/dapp-kit`.
+- **Session persistence** and smooth signing flows.
 
-### 📲 QR Code Verification
-
-- Each ticket is embedded with a unique QR code for instant and tamper-proof validation.
-- Eliminates counterfeit tickets and simplifies on-site verification.
-
-### 🔐 Secure Blockchain Transactions
-
-- Powered by Avalanche, enabling fast, transparent, and cost-efficient ticket purchases and resales.
-- Immutable transaction records provide peace of mind for buyers and sellers.
-
-### 🔄 Resale Marketplace
-
-- A decentralized marketplace for verified resale, maintaining ticket integrity and fair pricing.
-- Automated smart contracts prevent scalping and fraud.
+### 📱 Polished UX
+- **Modern, responsive UI** powered by Tailwind and shadcn/ui.
+- **Accessible components** with Radix primitives.
 
 ## 🛠️ Tech Stack
 
 ### Languages & Frameworks
-
-
-### Languages & Frameworks
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Solidity](https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
-### Blockchain
-![Avalanche](https://img.shields.io/badge/Avalanche-E84142?style=for-the-badge&logo=avalanche&logoColor=white)
-![Web3.js](https://img.shields.io/badge/Web3.js-F16822?style=for-the-badge&logo=web3.js&logoColor=white)
+### Styling & UI
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge)
+![Radix](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge)
 
-### Development Tools
-![Hardhat](https://img.shields.io/badge/Hardhat-FFF100?style=for-the-badge&logo=hardhat&logoColor=black)
-![OpenZeppelin](https://img.shields.io/badge/OpenZeppelin-4E5EE4?style=for-the-badge&logo=OpenZeppelin&logoColor=white)
-![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
-
-
-
+### Blockchain & Data
+![Sui](https://img.shields.io/badge/Sui-6FBCF0?style=for-the-badge)
+![Mysten dapp-kit](https://img.shields.io/badge/@mysten/dapp--kit-0A7AFF?style=for-the-badge)
+![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+- Node.js 18+
+- npm or yarn
+- A Sui-compatible wallet (Sui Wallet, Suiet)
 
-1. **Install Node.js:**
+### 1) Clone & install
+```bash
+# Clone your fork or this repo
+git clone https://github.com/your-organization/seti.git
+cd seti
 
-   ```bash
-   # For Windows: Download and install from https://nodejs.org/
-   
-   # For Ubuntu/Debian
-   sudo apt update
-   sudo apt install nodejs npm
-   
-   # For macOS with Homebrew
-   brew install node
-   ```
-   Verify installation with: `node --version` and `npm --version`
+# Install dependencies
+npm install
+# or: yarn install
+```
 
-2. **Clone the repository:**
+### 2) Configure environment
+Copy and adjust env values:
+```bash
+cp .env.example .env.local
+```
+Then edit `.env.local`:
+```env
+# Sui Blockchain
+VITE_SUI_PACKAGE_ID=0x0          # Your deployed Move package ID
+VITE_NETWORK=devnet              # devnet | testnet | mainnet
 
-   ```bash
-   git clone https://github.com/mokayaj857/eventvax.git
+# Optional RPC override
+VITE_SUI_RPC_URL=https://fullnode.devnet.sui.io:443
+```
 
-   ```
+### 3) Run the app
+```bash
+npm run dev
+# or: yarn dev
+```
+Open http://localhost:5173 (Vite default) in your browser.
 
-2. **Install dependencies:**
+> Tip: Connect your Sui wallet and ensure it’s on the same network defined in `VITE_NETWORK`.
 
-   ```bash
-   npm install
-   ```
+## 🔗 Smart Contracts
+- Move module: `contract/sources/polymarket.move`
+- Provides core entry functions like `create_market`, liquidity ops, and market resolution primitives consumed by the frontend (`src/hooks/`).
+- Frontend interactions are handled via `@mysten/dapp-kit` and typed helpers in `src/types/contract`.
 
-3. **Compile smart contracts:**
+## 📦 Project Structure
+```
+src/
+├─ components/           # UI + domain components (shadcn/ui)
+├─ hooks/                # Data + blockchain interactions (React hooks)
+├─ pages/                # Page-level components
+├─ types/                # Contract + app types
+├─ App.tsx               # App shell
+└─ main.tsx              # Entry point
+contract/
+└─ sources/polymarket.move  # Move sources
+```
 
-   ```bash
-   npx hardhat compile
-   ```
+## 🧪 Developer Experience
+- **TypeScript strict** for reliability.
+- **ESLint** for code quality.
+- **Consistent UI system** with Tailwind + shadcn/ui.
+- **Production-ready builds** via Vite.
 
-4. **Configure Avalanche network:**
-   Edit `hardhat.config.js` to include Avalanche network details under the `networks` section.
+## 🚢 Deployment
+- Vercel or Netlify recommended.
+- Build: `npm run build` → outputs to `dist/`.
+- Configure env vars in your hosting dashboard.
 
-5. **Deploy contracts:**
+### Vercel quick start
+```bash
+npm i -g vercel
+vercel --prod
+```
 
-   ```bash
-   npx hardhat run scripts/deploy.js --network avalanche
-   ```
+### Netlify quick start
+```bash
+npm i -g netlify-cli
+netlify deploy --prod --dir=dist
+```
 
-6. **Run the application locally:**
+## 🗺️ Roadmap
+- Advanced market analytics and charts.
+- Portfolio dashboard and historical PnL.
+- Additional market types and conditional markets.
+- Governance and community discovery.
 
-   ```bash
-   # First, install and run the backend server
-   cd server
-   npm install
-   npm run dev
-   
-   # In a new terminal, run the frontend
-   cd eventvax
-   npm install
-   npm run dev
-   ```
+## 👏 Acknowledgments
+- Sui Foundation and Mysten Labs
+- shadcn/ui, Radix UI, Tailwind CSS
+- React and Vite communities
 
-> 💡 Don't forget to update your contract address in the configuration files!
-
-## 👥 The Team
-
-| Name                 | Role               | Contact                                                          |
-| -------------------- | ------------------ | ---------------------------------------------------------------- |
-| Brandistone Nyabonyi | Frontend Developer | [brandistone@example.com](mailto\:brandistone@example.com)       |
-| Williams Ochieng     | Smart Contract Dev | [williams@example.com](mailto\:williams@example.com)             |
-| Joseph Okumu Otieno  | Full-stack Engineer| [jokumu25@gmail.com](mailto\:jokumu25@gmail.com)       |
-| John Mokaya          | Frontend Developer | [mokayaj857@gmail.com](mailto\:mokayaj857@gmail.com)         |
-| Stanley Kariuki      | Smart Contract Dev | [stanleykariuki@example.com](mailto\:stanleykariuki@example.com) |
-| Phelix               | Backend Developer  | [phelix@example.com](mailto\:phelix@example.com)                 |
-
-## 📈 Project Milestones
-
-### 🌐 Waitlist Landing Page Integration
-
-<img width="945" alt="Screenshot 2025-01-21 151558" src="https://github.com/user-attachments/assets/36aff1b1-6c2f-476d-b0ea-8729c0a52148" />
-
-
-#### Key Deliverables:
-
-1. **Landing Page Design**
-
-   <img width="948" alt="Screenshot 2025-01-21 151517" src="https://github.com/user-attachments/assets/786b0fb1-92c5-4433-89bd-6c7282ea8e69" />
-
-2. **Tickets collection**
-   <img width="950" alt="Screenshot 2025-01-21 161518" src="https://github.com/user-attachments/assets/cd58022e-d42d-4327-b3f6-ec45d496d4d8" />
-   
-3. **Ticket sales**
-
- <img width="960" alt="Screenshot 2025-01-21 151643" src="https://github.com/user-attachments/assets/a222522c-71fc-47df-b6f0-a775ed58cd11" />
-
-4. **Ticket Minting**
-   <img width="959" alt="Screenshot 2025-01-21 151623" src="https://github.com/user-attachments/assets/f773d40b-760f-4021-aaf0-0ea4d87e677e" />
-
-4. **QR code Intergration**
-   <img width="947" alt="Screenshot 2025-01-21 162251" src="https://github.com/user-attachments/assets/99520049-8a10-4ae3-b538-2e6b0bc5df7b" />
-
-
-5. **Go Live!**
-
-   - Promote the page across social media and mailing lists.
-
-## ⛰️ Avalanche Integration
-
-### 🚀 Why Avalanche?
-
-- **Speed & Efficiency:** Lightning-fast finality for instant ticket transfers within 2 seconds.
-- **Low Costs:** Affordable transactions for users and event organizers.
-- **💰 Cost Efficiency**
-   - Minimal transaction fees
-   - Economical for both users and operators
-
-### 🔗 Deployment Strategy
-
-- Our smart contracts are deployed on Avalanche's C-Chain to facilitate secure ticket operations.
-- Robust deployment pipeline via Hardhat ensures reliability.
-
-## 🔮 Vision
-
-Eventverse is redefining event ticketing by combining blockchain security with intuitive user experiences. Stay tuned for exciting updates and new features as we shape the future of event access!
-
-## 📊 Project Status
-![Development Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
-![Build Status](https://img.shields.io/badge/Build-Passing-success?style=for-the-badge)
-![Test Coverage](https://img.shields.io/badge/Coverage-85%25-green?style=for-the-badge)
-
+## 📄 License
+MIT — see `LICENSE` for details.
