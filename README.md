@@ -154,12 +154,11 @@ netlify deploy --prod --dir=dist
 
 | Name | Role | Contact |
 | ---- | ---- | ------- |
-| Brandistone Nyabonyi | Frontend Developer | brandistone@example.com |
-| Williams Ochieng | Smart Contract Developer | williams@example.com |
-| Joseph Okumu Otieno | Full‑stack Engineer | jokumu25@gmail.com |
+| Mary Njoroge | Fronted Developer | marrianapeters00@gmail.com |
+| Graham | Full‑stack Engineer | jokumu25@gmail.com |
 | John Mokaya | Frontend Developer | mokayaj857@gmail.com |
-| Stanley Kariuki | Smart Contract Developer | stanleykariuki@example.com |
-| Phelix | Backend Developer | phelix@example.com |
+| Peter Njuguna | Smart Contract Developer | stanleykariuki@example.com |
+
 
 > Want edits? Share final names/roles/emails and I’ll update the table.
 
@@ -171,15 +170,22 @@ netlify deploy --prod --dir=dist
 !<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/19d8afe7-5b94-43da-83e8-050d4fad7642" />
 
 
-### Create Market Flow
-![Create Market Flow](./public/placeholder.svg)
+### Market Setup
+<img width="826" height="880" alt="image" src="https://github.com/user-attachments/assets/2d26f94f-c169-4e80-af24-b51dc38e490b" />
+
 
 ### Trading YES/NO
 <img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/04def0fe-73c3-4c44-912c-8e0946e4381b" />
 
 
-### Wallet Connection
-![Wallet Connection](./public/placeholder.svg)
+### Dashboard
+<img width="1701" height="956" alt="image" src="https://github.com/user-attachments/assets/1671f66e-7010-4bce-b8ff-914bb8414d07" />
+
+
+### Trading Activity
+<img width="1701" height="956" alt="image" src="https://github.com/user-attachments/assets/2462c984-7e30-4913-9b23-9409b6a77ae3" />
+
+
 
 ## 📈 Milestones
 
