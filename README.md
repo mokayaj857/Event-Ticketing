@@ -23,6 +23,10 @@ Try the live demo: https://seti-mvp.vercel.app/
 - **Real-time pricing** for YES/NO outcomes with dynamic liquidity.
 - **Structured analytics**: 24h volume, total liquidity, and performance signals.
 
+### 📊 Market Analytics
+- **24h volume tracking** and market-level liquidity metrics.
+- **Performance visualization** to understand price momentum and risk.
+
 ### 🧰 Market Creation
 - **One-click launch** of markets with question, description, end time, category, image, and tags.
 - **Initial liquidity** supplied in SUI with on-chain settlement.
@@ -30,6 +34,12 @@ Try the live demo: https://seti-mvp.vercel.app/
 ### 💧 Liquidity & Trading
 - **Add liquidity** to deepen markets and earn fees.
 - **Fast trades** with clear pre-trade payout and risk visibility.
+
+### 🧩 Technical Architecture
+- **TypeScript-first** implementation for strong typing.
+- **Custom React hooks** for blockchain interactions and state.
+- **Modular components** with clean separation of concerns.
+- **Robust error handling** and user-friendly feedback.
 
 ### 🔐 Wallet-first UX
 - **Sui wallet integration** via `@mysten/dapp-kit`.
@@ -56,12 +66,21 @@ Try the live demo: https://seti-mvp.vercel.app/
 ![Mysten dapp-kit](https://img.shields.io/badge/@mysten/dapp--kit-0A7AFF?style=for-the-badge)
 ![React Query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge)
 
+## 🚀 Live Demo
+
+Experience seti in action: **https://seti-mvp.vercel.app/**
+The demo showcases market browsing, trading, liquidity, and wallet integration on Sui.
+
 ## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+
 - npm or yarn
 - A Sui-compatible wallet (Sui Wallet, Suiet)
+
+### System Requirements
+- Modern browser: Chrome 90+, Firefox 88+, Safari 14+, or Edge 90+.
+- Network access to Sui Devnet/Testnet/Mainnet.
 
 ### 1) Clone & install
 ```bash
@@ -103,6 +122,17 @@ Open http://localhost:5173 (Vite default) in your browser.
 - Provides core entry functions like `create_market`, liquidity ops, and market resolution primitives consumed by the frontend (`src/hooks/`).
 - Frontend interactions are handled via `@mysten/dapp-kit` and typed helpers in `src/types/contract`.
 
+### Contract Entry Points
+| Function | Purpose | Parameters |
+|----------|---------|------------|
+| `create_market` | Initialize a new market | question, description, end_time, category, image_url, tags, initial_liquidity |
+| `get_market_info` | Retrieve market details and status | market object reference |
+| `place_prediction` | Trade on market outcomes | market_id, outcome, amount |
+| `add_liquidity` | Provide additional market liquidity | market_id, liquidity_amount |
+| `resolve_market` | Resolve completed markets | market_id, winning_outcome |
+| `withdraw_liquidity` | Remove liquidity from markets | market_id, amount |
+| `claim_winnings` | Claim payouts for resolved markets | market_id |
+
 ## 📦 Project Structure
 ```
 src/
@@ -115,6 +145,31 @@ src/
 contract/
 └─ sources/polymarket.move  # Move sources
 ```
+
+## 🧭 User Guide
+
+### Trading Workflow
+- **Connect Wallet**: Use the header to connect Sui Wallet or Suiet.
+- **Explore Markets**: Browse categories, read details, and check YES/NO prices and liquidity.
+- **Place Prediction**: Select YES/NO, enter SUI amount, review payout estimate, and sign.
+- **Manage Portfolio**: Track active positions and claim when resolved.
+
+### Market Creation Process
+- **Prerequisites**: Connected wallet, sufficient SUI, and a clear market question.
+- **Setup**: Provide question, description, end time (future), category, image, and tags.
+- **Launch**: Add initial liquidity and publish on-chain.
+
+### Market Categories
+| Category | Description | Examples |
+|----------|-------------|----------|
+| Crypto | Blockchain and crypto predictions | BTC price, L2 adoption, NFT volumes |
+| Stocks | Equity and company performance | Earnings beats, price targets |
+| Sports | Sports and athlete performance | Match outcomes, standings |
+| Politics | Elections and policy | Election winners, bills passing |
+| Technology | Product launches and tech | Feature releases, company metrics |
+| Economics | Macro indicators | GDP, CPI, employment |
+| Space | Exploration and astronomy | Launches, missions |
+| Other | Everything else | Culture, entertainment |
 
 ## 🧪 Developer Experience
 - **TypeScript strict** for reliability.
@@ -139,6 +194,27 @@ npm i -g netlify-cli
 netlify deploy --prod --dir=dist
 ```
 
+### Environment Configuration
+#### Required Environment Variables
+```env
+VITE_SUI_PACKAGE_ID=0x0  # Your deployed contract package ID
+VITE_NETWORK=devnet      # devnet | testnet | mainnet
+```
+
+#### Optional Environment Variables
+```env
+VITE_SUI_RPC_URL=https://fullnode.devnet.sui.io:443
+VITE_APP_NAME=seti
+VITE_APP_VERSION=1.0.0
+```
+
+### Deployment Checklist
+- [ ] Environment variables configured
+- [ ] Build tested locally
+- [ ] Domain and SSL configured
+- [ ] CDN for static assets
+- [ ] Error and performance monitoring enabled
+
 ## 🗺️ Roadmap
 - Advanced market analytics and charts.
 - Portfolio dashboard and historical PnL.
@@ -154,11 +230,10 @@ netlify deploy --prod --dir=dist
 
 | Name | Role | Contact |
 | ---- | ---- | ------- |
-| Mary Njoroge | Fronted Developer | marrianapeters00@gmail.com |
+| Mary Njoroge | Frontend Developer | marrianapeters00@gmail.com |
 | Graham | Full‑stack Engineer | jokumu25@gmail.com |
 | John Mokaya | Frontend Developer | mokayaj857@gmail.com |
 | Peter Njuguna | Smart Contract Developer | stanleykariuki@example.com |
-
 
 > Want edits? Share final names/roles/emails and I’ll update the table.
 
@@ -167,25 +242,19 @@ netlify deploy --prod --dir=dist
 > Replace these placeholders with real screenshots by adding files under `public/` (e.g., `public/screenshots/`) and updating the image paths below.
 
 ### Marketplace Overview
-!<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/19d8afe7-5b94-43da-83e8-050d4fad7642" />
-
+<img width="1517" height="946" alt="Marketplace Overview" src="https://github.com/user-attachments/assets/19d8afe7-5b94-43da-83e8-050d4fad7642" />
 
 ### Market Setup
-<img width="826" height="880" alt="image" src="https://github.com/user-attachments/assets/2d26f94f-c169-4e80-af24-b51dc38e490b" />
-
+<img width="826" height="880" alt="Market Setup" src="https://github.com/user-attachments/assets/2d26f94f-c169-4e80-af24-b51dc38e490b" />
 
 ### Trading YES/NO
-<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/04def0fe-73c3-4c44-912c-8e0946e4381b" />
-
+<img width="1517" height="946" alt="Trading YES/NO" src="https://github.com/user-attachments/assets/04def0fe-73c3-4c44-912c-8e0946e4381b" />
 
 ### Dashboard
-<img width="1701" height="956" alt="image" src="https://github.com/user-attachments/assets/1671f66e-7010-4bce-b8ff-914bb8414d07" />
-
+<img width="1701" height="956" alt="Dashboard" src="https://github.com/user-attachments/assets/1671f66e-7010-4bce-b8ff-914bb8414d07" />
 
 ### Trading Activity
-<img width="1701" height="956" alt="image" src="https://github.com/user-attachments/assets/2462c984-7e30-4913-9b23-9409b6a77ae3" />
-
-
+<img width="1701" height="956" alt="Trading Activity" src="https://github.com/user-attachments/assets/2462c984-7e30-4913-9b23-9409b6a77ae3" />
 
 ## 📈 Milestones
 
@@ -207,3 +276,66 @@ netlify deploy --prod --dir=dist
 
 ## 📄 License
 MIT — see `LICENSE` for details.
+
+---
+
+## 🧰 Development Reference
+
+### Technology Matrix
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| Frontend | React + TypeScript | UI and state management |
+| Build | Vite | Dev server and builds |
+| Styling | Tailwind CSS | Utility-first CSS |
+| UI | shadcn/ui + Radix UI | Accessible components |
+| Blockchain | Sui + @mysten/dapp-kit | Wallet + chain interactions |
+| Data | React Query | Server-state caching |
+
+### Development Scripts
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+
+### Code Quality Standards
+- TypeScript strict mode
+- ESLint with React + TS rules
+- Conventional commits
+
+### Contributing Guidelines
+1. Fork the repo and create a feature branch.
+2. Follow coding standards and TypeScript usage.
+3. Write clear commit messages.
+4. Update documentation when adding features.
+5. Open a PR with details of changes.
+
+## 🔒 Security
+
+### Measures
+| Component | Practice |
+|-----------|----------|
+| Wallet Security | Never store private keys |
+| Smart Contracts | Audited Move modules (when applicable) |
+| Validation | Client-side validation for inputs |
+| HTTPS | Use TLS in production |
+| Access Control | Wallet-based auth |
+
+### Best Practices
+- Don’t store sensitive data in local/session storage.
+- Validate inputs on client and server.
+- Regularly audit dependencies and contracts.
+
+## 🌐 Browser Compatibility
+| Browser | Minimum Version | Status |
+|---------|-----------------|--------|
+| Chrome | 90+ | ✅ Supported |
+| Firefox | 88+ | ✅ Supported |
+| Safari | 14+ | ✅ Supported |
+| Edge | 90+ | ✅ Supported |
+
+## ❓ Support & Troubleshooting
+- Open GitHub Issues for bugs and feature requests.
+- Ensure wallet is installed, updated, connected to the correct Sui network.
+- Verify SUI balance for gas; review market status before trading.
