@@ -175,7 +175,8 @@ netlify deploy --prod --dir=dist
 ![Create Market Flow](./public/placeholder.svg)
 
 ### Trading YES/NO
-![Trading YES/NO](./public/placeholder.svg)
+<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/04def0fe-73c3-4c44-912c-8e0946e4381b" />
+
 
 ### Wallet Connection
 ![Wallet Connection](./public/placeholder.svg)
