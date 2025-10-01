@@ -169,8 +169,7 @@ netlify deploy --prod --dir=dist
 
 ### Marketplace Overview
 !<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/19d8afe7-5b94-43da-83e8-050d4fad7642" />
-(<img width="1517" height="946" alt="image" src="https://github.com/user-attachments/assets/ad70886d-5fa6-469f-9c19-d21bdb390491" />
-)
+
 
 ### Create Market Flow
 ![Create Market Flow](./public/placeholder.svg)
